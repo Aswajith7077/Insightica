@@ -33,7 +33,7 @@ export default {
   theme: {
     extend: {
       FontFamily:{
-        lato:[
+        'lato':[
           'Lato'
         ]
       },

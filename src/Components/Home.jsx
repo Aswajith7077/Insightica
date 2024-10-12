@@ -51,11 +51,11 @@ const Home = () => {
     <div className="flex flex-col h-full justify-center" id="home">
       <TypewriterEffect
         words={result}
-        className={"mx-[15%] mt-[15%] mb-[3%] text-black dark:text-white"}
+        className={"mx-[15%] lg:mt-[15%] md:mt-[15%] mt-[30%] mb-[3%] text-black dark:text-white"}
       />
       <p
         className={
-          "text-black dark:text-white my-4 text-center text-[14px] w-[50%] mx-auto font-lato font-semibold"
+          "text-black dark:text-white my-4 text-center text-[14px] w-[50%] mx-auto font-[lato] font-semibold"
         }
       >
         {slogan}

@@ -1,252 +1,256 @@
 import React from "react";
-import {useState,useMemo} from 'react';
+import { useState, useMemo } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import axios from "axios";
+// import { tickers } from "@/Constants";
 
 import { PieChartComponent } from "./PieChartComponent";
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 import { Label } from "./UI/Label";
 import { Input } from "./UI/Input";
 import { cn } from "./UI/Utils";
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-} from "@nextui-org/react";
-import { ButtonStyle } from "@/Constants";
+// import {
+//   Table,
+//   TableHeader,
+//   TableColumn,
+//   TableBody,
+//   TableRow,
+//   TableCell,
+//   getKeyValue,
+// } from "@nextui-org/react";
+import { ButtonStyle, tickers } from "@/Constants";
 import Footer from "./Footer";
 
-
-
-const jsonData = [
-  {
-    c1: "0.0",
-    c2: "0.0",
-    c3: "3.0",
-    c10: "4.0",
-    c13: "1.0",
-    c16: "1.0",
-    c18: "2.0",
-    c19: "4.0",
-    c20: "1.0",
-    c21: "4.0",
-    c22: "2.0",
-    c23: "0.0",
-    c25: "1.0",
-    c26: "0.0",
-    c27: "4.0",
-    c29: "7.0",
-    c30: "0.0",
-    c31: "0.0",
-    c32: "3.0",
-    c33: "1.0",
-    c34: "8.0",
-    c35: "0.0",
-    c36: "3.0",
-    c37: "3.0",
-    c38: "1.0",
-    ticker_entry: "BHARTIARTL.NS_1",
-  },
-  {
-    c1: "0.0",
-    c2: "0.0",
-    c3: "3.0",
-    c10: "1.0",
-    c13: "1.0",
-    c16: "0.0",
-    c18: "2.0",
-    c19: "4.0",
-    c20: "1.0",
-    c21: "1.0",
-    c22: "2.0",
-    c23: "0.0",
-    c25: "1.0",
-    c26: "0.0",
-    c27: "0.0",
-    c29: "7.0",
-    c30: "0.0",
-    c31: "0.0",
-    c32: "3.0",
-    c33: "4.0",
-    c34: "8.0",
-    c35: "4.0",
-    c36: "1.0",
-    c37: "1.0",
-    c38: "1.0",
-    ticker_entry: "ITC.NS_1",
-  },
-  {
-    c1: "0.0",
-    c2: "0.0",
-    c3: "1.0",
-    c10: "5.0",
-    c13: "1.0",
-    c16: "1.0",
-    c18: "2.0",
-    c19: "1.0",
-    c20: "3.0",
-    c21: "0.0",
-    c22: "2.0",
-    c23: "0.0",
-    c25: "1.0",
-    c26: "0.0",
-    c27: "0.0",
-    c29: "0.0",
-    c30: "0.0",
-    c31: "0.0",
-    c32: "3.0",
-    c33: "4.0",
-    c34: "3.0",
-    c35: "0.0",
-    c36: "5.0",
-    c37: "5.0",
-    c38: "4.0",
-    ticker_entry: "RELIANCE.NS_1",
-  },
-  {
-    c1: "0.0",
-    c2: "0.0",
-    c3: "3.0",
-    c10: "1.0",
-    c13: "1.0",
-    c16: "1.0",
-    c18: "2.0",
-    c19: "4.0",
-    c20: "1.0",
-    c21: "4.0",
-    c22: "2.0",
-    c23: "0.0",
-    c25: "1.0",
-    c26: "0.0",
-    c27: "0.0",
-    c29: "7.0",
-    c30: "0.0",
-    c31: "5.0",
-    c32: "3.0",
-    c33: "1.0",
-    c34: "8.0",
-    c35: "0.0",
-    c36: "5.0",
-    c37: "5.0",
-    c38: "4.0",
-    ticker_entry: "WIPRO.NS_1",
-  },
-];
-
 const durations = [
-  '5 - days','10 - days','15 - days','20 - days','25 - days'
+  "5 - days",
+  "10 - days",
+  "15 - days",
+  "20 - days",
+  "25 - days",
 ];
 
+const jsonData1 = [
+  {
+    Sno: "1",
+    Condition: "c1",
+    Accuracy: "71.29387321841264",
+  },
+  {
+    Sno: "2",
+    Condition: "c1",
+    Accuracy: "97.50000000000000",
+  },
+  {
+    Sno: "3",
+    Condition: "c3",
+    Accuracy: "63.43875645235200",
+  },
+  {
+    Sno: "4",
+    Condition: "c5",
+    Accuracy: "98.49382946321874",
+  },
+];
 
+// const [data, setData] = useState([]);
 
-const computeColumns = (json)=>{
-  
+//   useEffect(() => {
+//     axios.get('/data.json')
+//       .then(response => setData(response.data))
+//       .catch(error => console.error('Error fetching data:', error));
+//   }, []);
+
+const computeColumns = (json) => {
   var columns = [];
-  console.log(Object.entries(json[0]))
-  for(const [key,value] of Object.entries(json[0]))
-    columns.push({"key":key});
-  
+  console.log(Object.entries(json[0]));
+  for (const [key, value] of Object.entries(json[0]))
+    columns.push({ key: key });
+
   return columns;
-}
+};
 
-const handleSubmit = () =>{
-  document
-}
 
+
+var conditions = [];
 
 const Hero = () => {
+  const [isValidTicker, setValidTicker] = useState(false);
+  const [isValidDuration, setValidDuration] = useState(false);
+  const [isValidOptimizer,setValidOptimizer] = useState(false);
+  const [isValidCondition,setValidCondition] = useState(false);
+  const columns = computeColumns(jsonData1);
 
-  const columns = computeColumns(jsonData);
-
-  const classes = [
-    'BHARTIARTL.NS',
-    'ITC.NS',
-    'RELIANCE.NS',
-    'WIPRO.NS',
-  ]
-
-
+  var chosenTimeDuration, chosenTicker, chosenOptimizer;
+  var chosenConditions = [];
 
   var count = 0;
   return (
-    <div className="mx-[10%] ">
-      <h2 className="font-bold text-3xl text-neutral-800 dark:text-neutral-200 my-10">
-        Trade Decision Optimizer
-      </h2>
-      <div className="w-[35%] flex flex-col ">
-        <Select label="Duration " >
-          {durations.map((duration, index) => (
-            <SelectItem key={index}>{duration}</SelectItem>
-          ))}
-        </Select>
-        <Autocomplete label="Choose" className="my-3">
-          {classes.map((c, index) => (
-            <AutocompleteItem key={index} value={c}>
-              {c}
-            </AutocompleteItem>
-          ))}
-          ;
-        </Autocomplete>
-        <Select label="What to Optimize " >
-          {durations.map((duration, index) => (
-            <SelectItem key={index}>{duration}</SelectItem>
-          ))}
-        </Select>
-        <Select label="Conditions " className="my-3">
-          {durations.map((duration, index) => (
-            <SelectItem key={index}>{duration}</SelectItem>
-          ))}
-        </Select>
-      </div>
+    <div className="mt-[10%]">
+      <div className="mx-[10%] ">
+        <h2 className="font-bold text-3xl text-neutral-800 dark:text-neutral-200 my-10">
+          Trade Decision Optimizer
+        </h2>
+        <div className="lg:w-[45%] md:w-[50%] flex flex-col ">
+          <Select
+            label="Duration "
+            className="font-[lato] text-bold text-[18px]"
+            errorMessage={isValidDuration?"":"Please Select a valid time period"}
+            isInvalid={isValidDuration}
+            onChange={(e) => {
+              chosenTimeDuration = durations[e.target.value];
+              setValidDuration(
+                chosenTimeDuration == null ||
+                  chosenTimeDuration == undefined ||
+                  chosenTimeDuration == NaN
+                  ? true
+                  : false
+              );
+            }}
+          >
+            {durations.map((duration, index) => (
+              <SelectItem key={index} className="font-[lato]">
+                {duration}
+              </SelectItem>
+            ))}
+          </Select>
+          <Autocomplete
+            label="Ticker"
+            className="my-3"
+            errorMessage={isValidTicker ? "" : "Please select a valid Ticker"}
+            isInvalid={isValidTicker}
+            onSelectionChange={(e) => {
+              chosenTicker = tickers[e];
+              setValidTicker(
+                chosenTicker == null ||
+                  chosenTicker == undefined ||
+                  chosenTicker == NaN
+                  ? true
+                  : false
+              );
+              console.log("value " + chosenTicker);
+            }}
+          >
+            {tickers.map((c, index) => (
+              <AutocompleteItem key={index} value={c}>
+                {c}
+              </AutocompleteItem>
+            ))}
+          </Autocomplete>
+          <Select
+            label="What to Optimize "
+            errorMessage={isValidOptimizer ? "": "Please select a valid Optimizer"}
+            isInvalid={isValidOptimizer}
+            onChange={(e) => {
+              chosenOptimizer = durations[e.target.value];
+              setValidOptimizer(
+                chosenOptimizer == null||
+                chosenOptimizer == undefined||
+                chosenOptimizer == NaN
+                ? true
+                : false
+              )
+            }}
+          >
+            {durations.map((duration, index) => (
+              <SelectItem key={index}>{duration}</SelectItem>
+            ))}
+          </Select>
+          <Select
+            label="Conditions "
+            className="my-3"
+            errorMessage={isValidCondition?"":"Please select Atleast one Condition"}
+            isInvalid={isValidCondition}
+            onChange={(e) => {
+              let value = durations[e.target.value];
+              if (!chosenConditions.includes(value) && value != null && value != undefined && value != NaN)
+                chosenConditions.push(value);
+            }}
+          >
+            {durations.map((duration, index) => (
+              <SelectItem key={index}>{duration}</SelectItem>
+            ))}
+          </Select>
+        </div>
 
-      <button className={` my-4 ${ButtonStyle} w-[35%]`} onClick={handleSubmit}>
-        Submit
-      </button>
+        <button
+          className={` my-4 ${ButtonStyle} w-full lg:w-[45%] md:w-[50%] h-[60px] rounded-[19px]`}
+          onClick={()=>{
+            if(chosenTimeDuration == null || chosenTimeDuration == undefined || chosenTimeDuration == NaN)
+              setValidDuration(false);
+            if(chosenTicker == null || chosenTicker == undefined || chosenTicker == NaN)
+              setValidTicker(false);
+            if(chosenOptimizer == null || chosenOptimizer == undefined || chosenOptimizer == NaN)
+              setValidOptimizer(false);
+            if(chosenConditions == null || chosenConditions.length == 0)
+              setValidCondition(false);
 
+            if(isValidDuration && isValidTicker && isValidOptimizer && isValidCondition){
+              axios.post('http://localhost:5050',{
+                "duration":chosenTimeDuration,
+                "ticker":chosenTicker,
+                "optimizer":chosenOptimizer,
+                "conditions":chosenConditions
+              }).then((res)=>{
+                console.log(res);
+              }).catch((err)=>{
+                console.log(err);
+              });
+            }
+          }}
+        >
+          Submit
+        </button>
 
-      <h1 className="text-3xl text-black dark:text-white my-7">Results</h1>
+        <h1 className="text-3xl text-black dark:text-white my-7">Results</h1>
 
-      <Table aria-label="Example table with dynamic content">
-        <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key}>{column.key}</TableColumn>}
-        </TableHeader>
-        <TableBody items={jsonData}>
-          {(item) => (
-            <TableRow key={count}>
-              {(columnKey) => {
-                count++;
-                return <TableCell>{getKeyValue(item, columnKey)}</TableCell>;
-              }}
+        <PieChartComponent className="h-[500px]"/>
+
+        <Table className="my-[30%] lg:my-[10%] md:my-[10%]">
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[10%] text-right text-xl">Sno</TableHead>
+              <TableHead className="w-[10%] text-right text-xl">
+                Condition
+              </TableHead>
+              <TableHead className="w-[40%] text-right text-xl">
+                Accuracy
+              </TableHead>
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      {PieChartComponent()}
-      {Footer}
+          </TableHeader>
+          <TableBody>
+            {jsonData1.map((value) => {
+              return (
+                <TableRow>
+                  <TableCell className="font-medium font-[lato] text-[14px] md:text-[19px] lg:text-[19px] h-[60px] text-right">
+                    {value.Sno}
+                  </TableCell>
+                  <TableCell className="font-[lato] text-[14px] md:text-[19px] lg:text-[19px] w-[20%] text-right">
+                    {value.Condition}
+                  </TableCell>
+                  <TableCell className="font-[lato] text-[14px] md:text-[19px] lg:text-[19px] w-[40%] text-right">
+                    {value.Accuracy}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+      <Footer />
     </div>
   );
-}
-
-
+};
 
 export default Hero;
-
-
