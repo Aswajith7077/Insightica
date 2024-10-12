@@ -10,7 +10,7 @@ const NavBar = () => {
   const navLinks = [
     {
       text: "Home",
-      link: "/",
+      link: "home",
     },
     {
       text: "About",
@@ -30,6 +30,7 @@ const NavBar = () => {
     },
   ];
   const AppName = "TradeWiz";
+  const [click,setClick] = useState(false);
 
   const [theme, setTheme] = useState((document.documentElement.classList.contains("dark"))?"dark":"light");
   useEffect(() => {
@@ -42,7 +43,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex flex-row justify-between my-7 mx-10">
+    <nav className="navbar fixed flex flex-row justify-between py-7 px-10 backdrop-blur-3xl w-full z-50">
       <div className="flex flex-column justify-center inline-block align-middle">
         <img src={sample_logo} className="w-[40px] h-auto" />
         <h1 className="text-bold inline-block align-middle font-bold">
@@ -59,7 +60,7 @@ const NavBar = () => {
               smooth={true}
               offset={50}
               duration={500}
-              className="color-black mx-5 font-semibold"
+              className="color-black mx-5 font-semibold cursor-pointer"
             >
               {value.text.toUpperCase()}
             </Link>

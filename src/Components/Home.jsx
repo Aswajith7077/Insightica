@@ -44,30 +44,27 @@ const Home = () => {
   });
 
 
-
   const slogan =
     "AI and ML based method to assign weights to trading conditions across diverse financial sectors like Equities, Futures, Options, Bonds, and Cryptocurrencies.";
 
   return (
-    <div className="flex flex-col h-full justify-center">
+    <div className="flex flex-col h-full justify-center" id="home">
       <TypewriterEffect
         words={result}
-        className={"mx-[15%] mt-[6%] mb-[2%] text-black dark:text-white"}
+        className={"mx-[15%] mt-[15%] mb-[3%] text-black dark:text-white"}
       />
       <p
         className={
-          "text-black dark:text-white my-4 text-center text-[14px] w-[50%] mx-auto"
+          "text-black dark:text-white my-4 text-center text-[14px] w-[50%] mx-auto font-lato font-semibold"
         }
       >
         {slogan}
       </p>
-      {/* <div className='flex justify-center my-5'> */}
       <Link to="hero" className="flex justify-center my-5 m-auto w-cover ">
         <button className={ButtonStyle}
         >          Get Started
         </button>
       </Link>
-      {/* </div> */}
     </div>
   );
 }
