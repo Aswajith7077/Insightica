@@ -12,7 +12,7 @@ const Instructions = () => {
       <div className={`mx-[5%] my-[7%] lg:flex sm:flex flex-col lg:flex-row md:grid md:gap-4 md:grid-cols-2 md:grid-rows-2 justify-center`}>
         {steps.map((value, index) => {
           return (
-            <CardSpotlight key={index} className="justify-center h-96 w-96 mx-[2%] my-5 bg-[#222226] rounded-[20px]">
+            <CardSpotlight key={index} className="justify-center h-96 lg:w-96 md:w-80 mx-[2%] my-5 bg-[#222226] rounded-[20px]">
               <p className="text-xl font-bold relative z-20 mt-2 text-white ">
                 {`Step ${index + 1}`}
               </p>

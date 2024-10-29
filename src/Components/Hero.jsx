@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import axios from "axios";
-// import { tickers } from "@/Constants";
 
 import { PieChartComponent } from "./PieChartComponent";
 
@@ -20,15 +19,7 @@ import {
 import { Label } from "./UI/Label";
 import { Input } from "./UI/Input";
 import { cn } from "./UI/Utils";
-// import {
-//   Table,
-//   TableHeader,
-//   TableColumn,
-//   TableBody,
-//   TableRow,
-//   TableCell,
-//   getKeyValue,
-// } from "@nextui-org/react";
+
 import { ButtonStyle, tickers } from "@/Constants";
 import Footer from "./Footer";
 
@@ -111,8 +102,7 @@ const Hero = () => {
               chosenTimeDuration = durations[e.target.value];
               setValidDuration(
                 chosenTimeDuration == null ||
-                  chosenTimeDuration == undefined ||
-                  chosenTimeDuration == NaN
+                  chosenTimeDuration == undefined
                   ? true
                   : false
               );
@@ -133,8 +123,7 @@ const Hero = () => {
               chosenTicker = tickers[e];
               setValidTicker(
                 chosenTicker == null ||
-                  chosenTicker == undefined ||
-                  chosenTicker == NaN
+                  chosenTicker == undefined
                   ? true
                   : false
               );
@@ -155,8 +144,7 @@ const Hero = () => {
               chosenOptimizer = durations[e.target.value];
               setValidOptimizer(
                 chosenOptimizer == null||
-                chosenOptimizer == undefined||
-                chosenOptimizer == NaN
+                chosenOptimizer == undefined
                 ? true
                 : false
               )
@@ -173,8 +161,15 @@ const Hero = () => {
             isInvalid={isValidCondition}
             onChange={(e) => {
               let value = durations[e.target.value];
-              if (!chosenConditions.includes(value) && value != null && value != undefined && value != NaN)
+              if (!chosenConditions.includes(value) && value != null && value != undefined)
                 chosenConditions.push(value);
+              setValidCondition(
+                chosenConditions == null ||
+                chosenConditions == undefined||
+                chosenConditions.length == 0
+                ? true
+                : false
+              )
             }}
           >
             {durations.map((duration, index) => (
@@ -186,14 +181,17 @@ const Hero = () => {
         <button
           className={` my-4 ${ButtonStyle} w-full lg:w-[45%] md:w-[50%] h-[60px] rounded-[19px]`}
           onClick={()=>{
-            if(chosenTimeDuration == null || chosenTimeDuration == undefined || chosenTimeDuration == NaN)
-              setValidDuration(false);
-            if(chosenTicker == null || chosenTicker == undefined || chosenTicker == NaN)
-              setValidTicker(false);
-            if(chosenOptimizer == null || chosenOptimizer == undefined || chosenOptimizer == NaN)
-              setValidOptimizer(false);
+            console.log("HI Inside Button")
+            console.log(chosenConditions,chosenOptimizer,chosenTicker,chosenTimeDuration);
+            console.log((chosenOptimizer == null || chosenOptimizer == undefined),(chosenTimeDuration == null || chosenTimeDuration == undefined ),(chosenTicker == null || chosenTicker == undefined),(chosenConditions == null || chosenConditions.length == 0))
+            if(chosenTimeDuration == null || chosenTimeDuration == undefined )
+              setValidDuration(true);
+            if(chosenTicker == null || chosenTicker == undefined)
+              setValidTicker(true);
+            if(chosenOptimizer == null || chosenOptimizer == undefined)
+              setValidOptimizer(true);
             if(chosenConditions == null || chosenConditions.length == 0)
-              setValidCondition(false);
+              setValidCondition(true);
 
             if(isValidDuration && isValidTicker && isValidOptimizer && isValidCondition){
               axios.post('http://localhost:5050',{
@@ -217,14 +215,14 @@ const Hero = () => {
         <PieChartComponent className="h-[500px]"/>
 
         <Table className="my-[30%] lg:my-[10%] md:my-[10%]">
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[10%] text-right text-xl">Sno</TableHead>
-              <TableHead className="w-[10%] text-right text-xl">
+              <TableHead className="w-[10%] text-right text-xl h-[60px]">Sno</TableHead>
+              <TableHead className="w-[10%] text-right text-xl h-[60px]">
                 Condition
               </TableHead>
-              <TableHead className="w-[40%] text-right text-xl">
+              <TableHead className="w-[40%] text-right text-xl h-[60px]">
                 Accuracy
               </TableHead>
             </TableRow>

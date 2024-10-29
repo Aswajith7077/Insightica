@@ -10,7 +10,7 @@ const About = (className) => {
 
       
       <h1 className="text-3xl font-bold">What Actually we do?</h1>
-      <PinContainer
+      {/* <PinContainer
         title="We help you here "
         href="https://twitter.com/mannupaaji"
         className='z-0'
@@ -26,7 +26,7 @@ const About = (className) => {
           </div>
           <div className="flex flex-1 w-full rounded-lg mt-4 bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" />
         </div>
-      </PinContainer>
+      </PinContainer> */}
     </div>
   );
 };
