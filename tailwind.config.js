@@ -35,6 +35,9 @@ export default {
       FontFamily:{
         'lato':[
           'Lato'
+        ],
+        'montserrat':[
+          'Monserrat'
         ]
       },
       boxShadow: {

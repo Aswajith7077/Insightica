@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "./Utils";
+import { cn } from "./../../lib/utils.js";
 
 export function LampDemo() {
   return (

@@ -1,11 +1,10 @@
 import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { navLinks } from '@/Constants';
+import { navLinks } from './../Constants';
 import { Link } from "react-scroll";
 
 const ResponsiveMenu = ({open}) => {
-    console.log(open);
   return (
     <AnimatePresence mode="wait">
         {

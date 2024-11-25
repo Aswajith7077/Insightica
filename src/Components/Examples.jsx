@@ -1,5 +1,5 @@
 import React from "react";
-import { InfiniteMovingCards } from "./UI/InfiniteMovingCards";
+import { InfiniteMovingCards } from "./UI/InfiniteMovingCards.jsx";
 
 const testimonials = [
   {
@@ -96,10 +96,7 @@ const Examples = () => {
     <div id="examples">
       <h1 className="text-3xl mx-[5%]">Examples</h1>
       <div className="h-[20rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-        <InfiniteMovingCards
-          items={testimonials}
-          speed="slow"
-        />
+        
       </div>
     </div>
   );

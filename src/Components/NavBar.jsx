@@ -1,16 +1,21 @@
 import React from "react";
 import { sample_logo, menu } from "../assets";
-import { Switch } from "@nextui-org/react";
+import { Button, Switch } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-scroll";
-import { navLinks } from "@/Constants";
+import { Link as Lk } from "react-router-dom";
+import { navLinks } from "./../Constants";
 import ResponsiveMenu from "./ResponsiveMenu";
+import { AppName } from "./../Constants";
+
+import { SunIcon } from "./Sun";
+import { MoonIcon } from "./Moon";
+import { IoMenu } from "react-icons/io5";
 
 
 const NavBar = () => {
   
-  const AppName = "TradeWiz";
   const [click,setClick] = useState(false);
 
 
@@ -26,13 +31,13 @@ const NavBar = () => {
 
   return (
     <nav className="navbar fixed flex flex-row justify-between py-7 px-5 lg:px-10 md:px-10 backdrop-blur-3xl w-full z-50">
-      <div className="flex flex-column justify-center inline-block align-middle">
+      <div className="flex flex-column justify-center inline-block items-center">
         <img src={sample_logo} className="w-[40px] h-auto" />
         <h1 className="text-bold inline-block align-middle font-bold">
           {AppName}
         </h1>
       </div>
-      <div className="w-auto flex justify-center">
+      <div className="ml-[0%] md:ml-[5%]   w-auto flex justify-center items-center">
         {navLinks.map((value, index) => {
           return (
             <Link
@@ -49,18 +54,40 @@ const NavBar = () => {
           );
         })}
       </div>
-      <div className="flex flex-row px-2 justify-center">
-        <div className="lg:hidden block cursor-pointer mx-3 px-2 py-1 rounded-[10px] bg-white dark:bg-black" onClick={() => {setClick(!click);console.log(click)}}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify">
-            <path d="M3 12h18"/>
-            <path d="M3 18h18"/>
-            <path d="M3 6h18"/>
-          </svg>
+      <div className="flex flex-row px-2 justify-center items-center">
+        <div
+          className="lg:hidden block cursor-pointer mx-3 px-2 py-1 rounded-[10px] bg-white dark:bg-black"
+          onClick={() => {
+            setClick(!click);
+            console.log(click);
+          }}
+        >
+          <IoMenu size={28} />
         </div>
-        <Switch defaultSelected isSelected={(theme==='dark'?true:false)} onValueChange={handleThemeSwitch}></Switch>
-        
+        <Switch
+          defaultSelected
+          color="#006FEE"
+          startContent={<SunIcon />}
+          endContent={<MoonIcon />}
+          isSelected={theme === "dark" ? false : true}
+          onValueChange={handleThemeSwitch}
+        ></Switch>
+
+        <div className="flex flex-row">
+          <Lk to="/login" className="mx-2">
+            <Button className="border-2 bg-transparent border-blue-500 rounded-[16px] font-[lato] text-base  px-5 py-1">
+              Login
+            </Button>
+          </Lk>
+
+          <Lk to="/signin" className="mx-2">
+            <Button className="bg-blue-500 rounded-[16px] font-[lato] text-base text-white px-5 py-1">
+              Sign In
+            </Button>
+          </Lk>
+        </div>
       </div>
-      <ResponsiveMenu open={click}/>
+      <ResponsiveMenu open={click} />
     </nav>
   );
 };

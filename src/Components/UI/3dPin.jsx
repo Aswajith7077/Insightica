@@ -1,7 +1,6 @@
-"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "./../../lib/utils.js";
 import { Link } from "react-router-dom";
 
 export const PinContainer = ({
@@ -12,7 +11,7 @@ export const PinContainer = ({
   containerClassName,
 }) => {
   const [transform, setTransform] = useState(
-    "translate(-50%,0%) rotateX(0deg)"
+    "translate(-50%,0%) rotateX(0deg)"  
   );
 
   const onMouseEnter = () => {
