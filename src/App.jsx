@@ -12,23 +12,24 @@ import Login from "./Components/Login";
 import SignIn from "./Components/SignUp";
 import ComingSoon from "./Components/ComingSoon";
 import { useEffect, useState } from "react";
+import Dashboard from "./Components/DashBoard/Dashboard";
 
 
 
 function App() {
 
-  const [accessTime, setAccessTime] = useState(0);
+  // const [accessTime, setAccessTime] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAccessTime((prevTime)=>{
-        return (prevTime +1);
-      });
-      console.log(accessTime)
-    }, 2000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setAccessTime((prevTime)=>{
+  //       return (prevTime +1);
+  //     });
+  //     console.log(accessTime)
+  //   }, 2000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <BrowserRouter>
@@ -46,6 +47,7 @@ function App() {
             </div>
           }
         />
+        <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path="/" element={<ComingSoon />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
