@@ -1,5 +1,5 @@
 import React from "react";
-import { sample_logo, menu } from "../assets";
+import { sample_logo } from "../assets";
 import { Button, Switch } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
@@ -31,7 +31,7 @@ const NavBar = () => {
 
   return (
     <nav className="navbar fixed flex flex-row justify-between py-7 px-5 lg:px-10 md:px-10 backdrop-blur-3xl w-full z-50">
-      <div className="flex flex-column justify-center inline-block items-center">
+      <div className="flex flex-column justify-center items-center">
         <img src={sample_logo} className="w-[40px] h-auto" />
         <h1 className="text-bold inline-block align-middle font-bold">
           {AppName}
