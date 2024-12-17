@@ -75,9 +75,7 @@ const SignIn = () => {
 
   return (
     <div className="w-full h-full bg-gradient-to-br from-black to-gray-900 border border-black">
-      {/* bg-[#3b82f644] */}
       <div className="flex flex-col md:flex-row items-center h-full min-w-[30rem] my-[3%] bg-emerald-200 rounded-[40px] py-10 px-10 mx-[5%] shadow-xl">
-        {/* <img src={login} className="hidden lg:inline w-[40%] h-[40%] mb-[5%]" /> */}
         <div className="flex flex-col h-full w-full items-center">
           <Link to="/landingpage" className="w-full my-5 px-3">
             <motion.button
@@ -176,8 +174,6 @@ const SignIn = () => {
                 className="text-lg font-semibold text-white"
                 whileHover={{ y: -10, color: "#3b82f6" }}
                 whileTap={{ scale: 0.95, transitionDuration: 0.2 }}
-                onHoverStart={(e) => {}}
-                onHoverEnd={(e) => {}}
               >
                 Login
               </motion.a>

@@ -1,7 +1,6 @@
 import React from "react";
 import { globeConfig } from "@/Constants/index.js";
 import { sampleArcs } from "@/Constants/index.js";
-// import { TypewriterEffect } from "./UI/TyperWriter.jsx";
 import { FlipWords } from "./UI/flip-words.jsx";
 
 import { AppName } from "@/Constants/index.js";
@@ -10,19 +9,11 @@ const World = React.lazy(() =>
   import("./UI/globe").then((m) => ({ default: m.World }))
 );
 
-// var w = "Coming Soon".split(" ");
 
 const words = [
 	"Coming Soon",
 	"Revolutionized toolkit",
 ]
-
-// const result = w.map((value, index) => {
-//   return {
-//     text: `${value} `,
-//     className: `text-blue-200 text-3xl sm:text-4xl md:text-5xl lg:text-6xl`
-//   };
-// });
 
 
 
@@ -34,7 +25,6 @@ function ComingSoon() {
           <h1 className="w-auto text-left py-[3%] mx-[10%] text-5xl lg:text-7xl font-bold tracking-tight text-white font-[lato]">
             {AppName}
           </h1>
-          {/* <TypewriterEffect words={result} className="text-left mx-[10%] mb-8"/> */}
           <h1 className="text-left mx-[10%] text-3xl text-bold ">
             <FlipWords words={words} className="text-blue-500" />
           </h1>
