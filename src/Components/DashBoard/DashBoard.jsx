@@ -1,16 +1,16 @@
 import React from "react";
-import Testimonials from "./Testimonials";
-import FounderInfo from "./FounderInfo";
-import FAQ from "./FAQ";
-import { HorizontalChart } from "./HorizontalBarChart";
-import Pricing from "./Pricing";
-import Footer from "./Footer";
-import { LineGraph } from "./LineGraph";
-import { ActiveUsers } from "./ActiveUsers";
-import { Profits } from "./Profits";
-import { OverallUsages } from "./OverallUsages";
-import NavBar from "./NavBar";
-import Banner from "./Banner";
+import Testimonials from "@/Components/DashBoard/Testimonials";
+import FounderInfo from "@/Components/DashBoard/FounderInfo";
+import FAQ from "@/Components/DashBoard/FAQ";
+import { HorizontalChart } from "@/Components/DashBoard/HorizontalBarChart";
+import Pricing from "@/Components/DashBoard/Pricing";
+import Footer from "@/Components/DashBoard/Footer";
+import { LineGraph } from "@/Components/DashBoard/LineGraph";
+import { ActiveUsers } from "@/Components/DashBoard/ActiveUsers";
+import { Profits } from "@/Components/DashBoard/Profits";
+import { OverallUsages } from "@/Components/DashBoard/OverallUsages";
+import NavBar from "@/Components/DashBoard/NavBar";
+import Banner from "@/Components/DashBoard/Banner";
 import { useState } from "react";
 
 const Dashboard = () => {

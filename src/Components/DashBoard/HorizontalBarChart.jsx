@@ -5,7 +5,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
-} from "@/components/ui/chart";
+} from "@/Components/UI/chart";
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },

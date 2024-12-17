@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { IoCheckmarkDone } from "react-icons/io5";
-import { description } from "../PieChartComponent";
+// import { description } from "../PieChartComponent";
 import { useState } from "react";
 
 const pricing_values = [

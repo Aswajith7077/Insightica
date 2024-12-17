@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Accordion from "./Accordion.jsx";
+import Accordion from "@/Components/DashBoard/Accordion";
 
 const accordion_data = [
   {
