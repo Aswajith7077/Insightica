@@ -1,17 +1,17 @@
 import "./App.css";
-import Home from "./Components/Home";
-import NavBar from "./Components/NavBar";
-import About from "./Components/About";
-import Instructions from "./Components/Instructions";
-import ContactUs from "./Components/ContactUs";
-import Footer from "./Components/Footer";
-import Examples from "./Components/Examples";
+// import Home from "./Components/Home";
+// import NavBar from "./Components/NavBar";
+// import About from "./Components/About";
+// import Instructions from "./Components/Instructions";
+// import ContactUs from "./Components/ContactUs";
+// import Footer from "./Components/Footer";
+// import Examples from "./Components/Examples";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Hero from "./Components/Hero";
 import Login from "./Components/Login";
 import SignIn from "./Components/SignUp";
 import ComingSoon from "./Components/ComingSoon";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Dashboard from "./Components/DashBoard/Dashboard";
 
 
@@ -34,7 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
+        {/* <Route
           path="/landingpage"
           element={
             <div className="flex flex-col">
@@ -46,7 +46,7 @@ function App() {
               <Footer />
             </div>
           }
-        />
+        /> */}
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path="/" element={<ComingSoon />} />
         <Route path="/login" element={<Login />} />
