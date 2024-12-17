@@ -1,4 +1,4 @@
-import { cn } from "./../../lib/util.js";
+import { cn } from "@/lib/util.js";
 import React from "react";
 import { motion } from "framer-motion";
 

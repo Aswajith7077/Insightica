@@ -1,5 +1,5 @@
 
-import { cn } from "./../../lib/util.js";
+import { cn } from "@/lib/util.js";
 import { useEffect, useRef, useState } from "react";
 
 export const BackgroundGradientAnimation = ({

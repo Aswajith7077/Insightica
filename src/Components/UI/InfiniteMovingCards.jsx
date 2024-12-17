@@ -1,4 +1,4 @@
-import { cn } from "./../../lib/utils.js";
+import { cn } from "@/lib/utils.js";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({

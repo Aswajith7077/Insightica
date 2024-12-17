@@ -1,5 +1,4 @@
-"use client";
-import { cn } from "./../../lib/util.js";
+import { cn } from "@/lib/util.js";
 import { motion } from "framer-motion";
 import React from "react";
 
