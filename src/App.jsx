@@ -8,11 +8,11 @@ import "./App.css";
 // import Examples from "./Components/Examples";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import Hero from "./Components/Hero";
-import Login from "./Components/Login";
-import SignIn from "./Components/SignUp";
-import ComingSoon from "./Components/ComingSoon";
+import Login from "@/Components/Login";
+import SignIn from "@/Components/SignUp";
+import ComingSoon from "@/Components/ComingSoon";
 // import { useEffect, useState } from "react";
-import Dashboard from "./Components/DashBoard/Dashboard";
+import Dashboard from "@/Components/DashBoard/DashBoard.jsx";
 
 // src/Components/DashBoard/Profits.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
 // src/Components/DashBoard/ActiveUsers.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.

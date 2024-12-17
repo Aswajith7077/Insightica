@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { globeConfig } from "@/Constants/index.js";
 import { sampleArcs } from "@/Constants/index.js";
-import { TypewriterEffect } from "./UI/TyperWriter.jsx";
+// import { TypewriterEffect } from "./UI/TyperWriter.jsx";
 import { FlipWords } from "./UI/flip-words.jsx";
 
 import { AppName } from "@/Constants/index.js";
@@ -10,19 +10,19 @@ const World = React.lazy(() =>
   import("./ui/globe").then((m) => ({ default: m.World }))
 );
 
-var w = "Coming Soon".split(" ");
+// var w = "Coming Soon".split(" ");
 
 const words = [
 	"Coming Soon",
 	"Revolutionized toolkit",
 ]
 
-const result = w.map((value, index) => {
-  return {
-    text: `${value} `,
-    className: `text-blue-200 text-3xl sm:text-4xl md:text-5xl lg:text-6xl`
-  };
-});
+// const result = w.map((value, index) => {
+//   return {
+//     text: `${value} `,
+//     className: `text-blue-200 text-3xl sm:text-4xl md:text-5xl lg:text-6xl`
+//   };
+// });
 
 
 
