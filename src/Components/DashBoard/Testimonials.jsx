@@ -33,7 +33,7 @@ const testimonials = [
 const Card = ({ value }) => {
   return (
     <motion.div
-      className="px-10 py-10 border-1 rounded-[20px] hover:cursor-pointer hover:shadow-md mx-5"
+      className="px-10 py-10 border-1 bg-white rounded-[20px] hover:cursor-pointer hover:shadow-md mx-5"
       whileHover={{ scale: 1.05 }}
     >
       <img src="#" alt="" />

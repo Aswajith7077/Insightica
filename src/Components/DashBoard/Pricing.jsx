@@ -114,8 +114,8 @@ const pricing_values = [
 const Points = ({content}) => {
   const [isCollapsed,setIsCollapsed] = useState(false);
   return (
-    <div>
-      <div className="flex flex-row font-[lato] font-semibold text-[17px] items-center my-2 gap-5">
+    <div >
+      <div className="flex flex-row font-[lato] font-semibold text-[17px] items-center my-2 gap-5 ">
         <IoCheckmarkDone size={28} />
         <motion.h1
           whileHover={{ y: -3, color: "#2563eb" }}
@@ -149,7 +149,7 @@ const Card = ({ content }) => {
   return (
     <motion.div
       // whileHover={{scale:1.02}}
-      className="rounded-[20px] w-[30rem] h-full my-[5%] bg-black border-1 px-[2%] py-10"
+      className="rounded-[20px] w-[30rem] h-full my-[5%]  border-1 px-[2%] py-10 bg-white"
     >
       <h1 className="text-[lato] font-semibold text-3xl text-center">
         {content.title}

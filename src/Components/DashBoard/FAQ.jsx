@@ -16,7 +16,7 @@ const accordion_data = [
   }
 ];
 
-const FAQ = ({className,id}) => {
+const FAQ = ({ className, id }) => {
   return (
     <div className={className} id={id}>
       <h1 className="font-[montserrat] font-semibold text-4xl text-center">

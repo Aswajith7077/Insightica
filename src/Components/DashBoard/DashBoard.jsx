@@ -1,36 +1,39 @@
-import React from 'react'
-import Testimonials from './Testimonials'
-import FounderInfo from './FounderInfo'
-import FAQ from './FAQ';
-import { HorizontalChart } from './HorizontalBarChart';
-import Pricing from './Pricing';
-import Footer from './Footer';
-import { LineGraph } from './LineGraph';
-import { ActiveUsers } from './ActiveUsers';
-import { Profits } from './Profits';
-import { OverallUsages } from './OverallUsages';
-import NavBar from './NavBar';
-import Banner from './Banner';
-import { useState } from 'react';
+import React from "react";
+import Testimonials from "./Testimonials";
+import FounderInfo from "./FounderInfo";
+import FAQ from "./FAQ";
+import { HorizontalChart } from "./HorizontalBarChart";
+import Pricing from "./Pricing";
+import Footer from "./Footer";
+import { LineGraph } from "./LineGraph";
+import { ActiveUsers } from "./ActiveUsers";
+import { Profits } from "./Profits";
+import { OverallUsages } from "./OverallUsages";
+import NavBar from "./NavBar";
+import Banner from "./Banner";
+import { useState } from "react";
 
 const Dashboard = () => {
+  const [isLogged, setIsLogged] = useState(false);
 
-  const [isLogged,setIsLogged] = useState(false);
-
-	document.documentElement.classList.add("dark");
-	return (
-    <div>
-      <NavBar onLoginClick={()=>setIsLogged(!isLogged)}/>
-      {!isLogged && <Banner/>}
-      <div className="flex flex-row justify-center gap-10 my-[5%] pb-10 z-10">
-        <Profits className="w-full" />
-        <ActiveUsers className="w-full" />
+  // document.documentElement.classList.add("dark");
+  return (
+    <div className="bg-[#f6f8fb]">
+      <NavBar onLoginClick={() => setIsLogged(!isLogged)} />
+      {!isLogged && <Banner />}
+      {/* <div className="absolute w-full h-[20rem] bg-[#182433]"></div> */}
+      <div
+        className={`flex flex-row justify-center gap-10 py-[3%] mb-10 z-10 ${isLogged ? "pt-[10%]" : ""}`}
+        id="home"
+      >
+        <Profits className="w-full bg-white" />
+        <ActiveUsers className="w-full bg-white " />
         <LineGraph className="w-full" />
       </div>
-      <div className='mx-[10%]'>
-        <OverallUsages/>
+      <div className="mx-[10%] ">
+        <OverallUsages />
       </div>
-      <Pricing id='tools'/>
+      <Pricing id="tools" />
       <div className="flex flex-row mx-[7%] gap-[5%] my-[5%]">
         <div className="flex flex-col w-[40rem]">
           <h1 className="font-[montserrat] font-semibold text-5xl my-[5%]">
@@ -48,15 +51,15 @@ const Dashboard = () => {
         </div>
         <HorizontalChart />
       </div>
-      <FounderInfo />
+      <FounderInfo id={"founder"} />
       <h1 className="text-4xl font-[montserrat] font-semibold my-10 text-center">
         Our Investors say about us
       </h1>
-      <Testimonials id='testimonials'/>
-      <FAQ id={'faq'} className={"py-[5%]"} />
-      <Footer id='contact'/>
+      <Testimonials id="testimonials" />
+      <FAQ id={"faq"} className={"py-[5%]"} />
+      <Footer id="contact" />
     </div>
   );
-}
+};
 
 export default Dashboard;

@@ -1,10 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { sampleArcs,globeConfig } from "@/Constants";
-// import dynamic from "next/dynamic";
+import { sampleArcs, globeConfig } from "@/Constants";
+import { Link } from "react-scroll";
 
 const World = React.lazy(() =>
-  import("./../UI/globe").then((m) => ({ default: m.World }))
+  import("./../ui/globe").then((m) => ({ default: m.World }))
 );
 
 const title =
@@ -15,19 +15,21 @@ const slogan =
 
 const Banner = () => {
   return (
-    <div className="flex flex-row my-[4%] mx-[10%] ">
+    <div className="flex flex-row py-[4%] pt-[10%] text-white px-[10%] bg-[#182433]">
       <div className="mt-[2%]">
         <h1 className="font-[montserrat] leading-normal font-semibold text-4xl w-[45rem] mb-10">
           {title}
         </h1>
         <p className="w-[40rem] font-[lato] font-semibold text-md">{slogan}</p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="font-[lato] my-10 font-semibold text-md  py-3 rounded-[15px] px-10 bg-blue-700"
-        >
-          Get Started
-        </motion.button>
+        <Link to="tools" smooth={true}>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="font-[lato] my-10 font-semibold text-md  py-3 rounded-[15px] px-10 bg-blue-700"
+          >
+            Get Started
+          </motion.button>
+        </Link>
       </div>
       <div className="w-full ">
         <World data={sampleArcs} globeConfig={globeConfig} className="h-10" />
@@ -37,3 +39,4 @@ const Banner = () => {
 };
 
 export default Banner;
+

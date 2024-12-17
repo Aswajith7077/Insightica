@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
-const Accordion = ({value}) => {
-	const [isCollapsed,setIsCollapsed] = useState(true);
+const Accordion = ({ value }) => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
   return (
     <div>
       <div
@@ -12,7 +12,10 @@ const Accordion = ({value}) => {
       >
         {isCollapsed && <IoIosArrowForward size={24} />}
         {!isCollapsed && <IoIosArrowDown size={24} />}
-        <motion.h1 whileHover={{ y: -2, color: "#2563eb" }} className={(!isCollapsed)?'text-blue-700':'text-white'}>
+        <motion.h1
+          whileHover={{ y: -2, color: "#2563eb" }}
+          className={!isCollapsed ? "text-blue-700" : ""}
+        >
           {value.title}
         </motion.h1>
       </div>
@@ -27,6 +30,6 @@ const Accordion = ({value}) => {
       )}
     </div>
   );
-}
+};
 
 export default Accordion;
