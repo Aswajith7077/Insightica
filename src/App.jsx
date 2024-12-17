@@ -55,7 +55,7 @@ function App() {
         <Route path="/" element={<ComingSoon />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/hero" element={<Hero />} />
+        {/* <Route path="/hero" element={<Hero />} /> */}
       </Routes>
     </BrowserRouter>
   );
