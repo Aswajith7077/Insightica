@@ -4,7 +4,7 @@ import { sampleArcs, globeConfig } from "@/Constants";
 import { Link } from "react-scroll";
 
 const World = React.lazy(() =>
-  import("./../ui/globe").then((m) => ({ default: m.World }))
+  import("./../UI/globe").then((m) => ({ default: m.World }))
 );
 
 const title =

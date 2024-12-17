@@ -7,7 +7,7 @@ import { FlipWords } from "./UI/flip-words.jsx";
 import { AppName } from "@/Constants/index.js";
 
 const World = React.lazy(() =>
-  import("./ui/globe").then((m) => ({ default: m.World }))
+  import("./UI/globe").then((m) => ({ default: m.World }))
 );
 
 // var w = "Coming Soon".split(" ");
