@@ -12,13 +12,10 @@ import SignIn from "@/Components/SignUp";
 import ComingSoon from "@/Components/ComingSoon";
 // import { useEffect, useState } from "react";
 import Dashboard from "@/Components/DashBoard/DashBoard.jsx";
-
-// src/Components/DashBoard/Profits.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
-// src/Components/DashBoard/ActiveUsers.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
-// src/Components/DashBoard/OverallUsages.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
-// src/Components/UI/globe.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
-// src/Components/UI/flip-words.jsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
-// node_modules/three-stdlib/libs/lottie.js (13062:32): Use of eval in "node_modules/three-stdlib/libs/lottie.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+import Documentation from "./Components/DashBoard/Documentation";
+import SingleEvaluator from "./Components/DashBoard/SingleEvaluator";
+import DoubleEvaluator from "./Components/DashBoard/DoubleEvaluator";
+import TripleEvaluator from "./Components/DashBoard/TripleEvaluator";
 
 function App() {
   // const [accessTime, setAccessTime] = useState(0);
@@ -50,10 +47,14 @@ function App() {
             </div>
           }
         /> */}
+        <Route path="/docs" element={<Documentation />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<ComingSoon />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/singleeval" element={<SingleEvaluator />} />
+        <Route path="/doubleeval" element={<DoubleEvaluator />} />
+        <Route path="/tripleeval" element={<TripleEvaluator />} />
         {/* <Route path="/hero" element={<Hero />} /> */}
       </Routes>
     </BrowserRouter>

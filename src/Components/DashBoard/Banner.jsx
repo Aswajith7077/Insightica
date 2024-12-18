@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { sampleArcs, globeConfig } from "@/Constants";
 import { Link } from "react-scroll";
+import { Link as Lk } from "react-router-dom";
 
 const World = React.lazy(() =>
   import("./../UI/globe").then((m) => ({ default: m.World }))
@@ -21,15 +22,26 @@ const Banner = () => {
           {title}
         </h1>
         <p className="w-[40rem] font-[lato] font-semibold text-md">{slogan}</p>
-        <Link to="tools" smooth={true}>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="font-[lato] my-10 font-semibold text-md  py-3 rounded-[15px] px-10 bg-blue-700"
-          >
-            Get Started
-          </motion.button>
-        </Link>
+        <div className="flex flex-row gap-5">
+          <Link to="tools" smooth={true}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="font-[lato] my-10 font-semibold text-md  py-3 rounded-[15px] px-10 bg-blue-700 border-2 border-blue-700"
+            >
+              Get Started
+            </motion.button>
+          </Link>
+          <Lk to="/docs">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="font-[lato] my-10 font-semibold text-md  py-3 rounded-[15px] px-10 border-2"
+            >
+              Documentation
+            </motion.button>
+          </Lk>
+        </div>
       </div>
       <div className="w-full ">
         <World data={sampleArcs} globeConfig={globeConfig} className="h-10" />

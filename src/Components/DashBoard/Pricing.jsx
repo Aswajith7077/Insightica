@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { IoCheckmarkDone } from "react-icons/io5";
 // import { description } from "../PieChartComponent";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const pricing_values = [
   {
     title: "Single Evaluator",
+    link: "/singleeval",
     description:
       "Only one condition variable and show the performance of the resultant pairs of conditions ",
     tools: [
@@ -38,6 +40,7 @@ const pricing_values = [
   },
   {
     title: "Double Evaluator",
+    link: "/doubleeval",
     description:
       "Fixing ONE condition using a drop-down, and keep the other condition variable and show the performance of the resultant PAIRS of conditions ",
     tools: [
@@ -74,6 +77,7 @@ const pricing_values = [
   },
   {
     title: "Triple Evaluator",
+    link:'/tripleeval',
     description:
       "Fixing TWO condition using a drop-down, and keep the other condition variable and show the performance of the resultant TRIPLETS of conditions ",
     tools: [
@@ -131,15 +135,18 @@ const Points = ({content}) => {
   );
 }
 
-const Button = ({ text }) => {
+const Button = ({ text,link}) => {
   return (
-    <motion.button
-      whileHover={{ stroke: "#183f8c", shadow: "" }}
-      whileTap={{ scale: 0.95 }}
-      className="rounded-[15px] border-1 border-black bg-[#0d0e13] hover:border-blue-800 w-full py-4 my-10 font-[lato] font-bold text-md text-white"
-    >
-      {text}
-    </motion.button>
+
+    <Link to={link}>
+      <motion.button
+        whileHover={{ stroke: "#183f8c", shadow: "" }}
+        whileTap={{ scale: 0.95 }}
+        className="rounded-[15px] border-1 border-black bg-[#0d0e13] hover:border-blue-800 w-full py-4 my-10 font-[lato] font-bold text-md text-white"
+      >
+        {text}
+      </motion.button>
+    </Link>
   );
 };
 
@@ -155,7 +162,7 @@ const Card = ({ content }) => {
         {content.title}
       </h1>
       <p className="text-center mt-10">{content.description}</p>
-      <Button text="Try Now" />
+      <Button text="Try Now" link={content.link}/>
       {content.tools.map((value,key)=>{
         return <Points content={value} key={key}/>
       })}

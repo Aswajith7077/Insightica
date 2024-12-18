@@ -16,12 +16,11 @@ import { useState } from "react";
 const Dashboard = () => {
   const [isLogged, setIsLogged] = useState(false);
 
-  // document.documentElement.classList.add("dark");
   return (
     <div className="bg-[#f6f8fb]">
       <NavBar onLoginClick={() => setIsLogged(!isLogged)} />
       {!isLogged && <Banner />}
-      {/* <div className="absolute w-full h-[20rem] bg-[#182433]"></div> */}
+
       <div
         className={`flex flex-row justify-center gap-10 py-[3%] mb-10 z-10 ${isLogged ? "pt-[10%]" : ""}`}
         id="home"
