@@ -12,10 +12,10 @@ import SignIn from "@/Components/SignUp";
 import ComingSoon from "@/Components/ComingSoon";
 // import { useEffect, useState } from "react";
 import Dashboard from "@/Components/DashBoard/DashBoard.jsx";
-import Documentation from "./Components/DashBoard/Documentation";
-import SingleEvaluator from "./Components/DashBoard/SingleEvaluator";
-import DoubleEvaluator from "./Components/DashBoard/DoubleEvaluator";
-import TripleEvaluator from "./Components/DashBoard/TripleEvaluator";
+import Documentation from "@/Components/DashBoard/Documentation";
+import SingleEvaluator from "@/Components/DashBoard/SingleEvaluator";
+import DoubleEvaluator from "@/Components/DashBoard/DoubleEvaluator";
+import TripleEvaluator from "@/Components/DashBoard/TripleEvaluator";
 
 function App() {
   // const [accessTime, setAccessTime] = useState(0);
