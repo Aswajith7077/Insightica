@@ -5,7 +5,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
-} from "@/Components/UI/chart";
+} from "@/components/ui/chart";
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -49,7 +49,7 @@ export function HorizontalChart() {
   // })
 
   return (
-    <div className="w-[50rem]">
+    <div className="w-1/2 hidden lg:flex">
       <ChartContainer config={chartConfig}>
         <BarChart
           accessibilityLayer

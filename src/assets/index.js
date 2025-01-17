@@ -1,4 +1,4 @@
-import sample_logo from './sample_logo.png';
+import sample_logo from './sampleLogo.png';
 import menu from './menu.svg';
 import login from './login.png';
 import back from './back.svg';

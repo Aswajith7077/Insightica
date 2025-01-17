@@ -1,29 +1,84 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "@/Components/Login";
-import SignIn from "@/Components/SignUp";
-import ComingSoon from "@/Components/ComingSoon";
-import Dashboard from "@/Components/DashBoard/DashBoard.jsx";
-import Documentation from "@/Components/DashBoard/Documentation";
-import SingleEvaluator from "@/Components/DashBoard/SingleEvaluator";
-import DoubleEvaluator from "@/Components/DashBoard/DoubleEvaluator";
-import TripleEvaluator from "@/Components/DashBoard/TripleEvaluator";
+import { useState } from "react";
+import { AuthProvider } from "@/auth/AuthContext";
+
+import Documentation from "@/components/dashboard/Documentation.jsx";
+import Dashboard from "@/components/dashboard/DashBoard.jsx";
+import ComingSoon from "@/components/ComingSoon.jsx";
+import Login from "@/components/Login.jsx";
+import SignIn from "@/components/SignUp.jsx";
+import NavBar from "@/components/dashboard/NavBar";
+import Tools from "@/components/dashboard/Tools";
+import Footer from "@/components/dashboard/Footer";
+import Error from "@/components/dashboard/Error";
+import ResetPassword from "@/components/ResetPassword";
+import Support from "./components/dashboard/Support";
+import { ResetProvider } from "./auth/ResetContext";
 
 function App() {
-
-
+  const [accessToken, setAccessToken] = useState("");
+  const [responseToken, setRefreshToken] = useState("");
+  const [isLogged, setIsLogged] = useState(undefined);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/docs" element={<Documentation />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<ComingSoon />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/singleeval" element={<SingleEvaluator />} />
-        <Route path="/doubleeval" element={<DoubleEvaluator />} />
-        <Route path="/tripleeval" element={<TripleEvaluator />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path="/docs"
+            element={
+              <div>
+                <NavBar />
+                <Documentation />
+              </div>
+            }
+          />
+          <Route
+            exact
+            path="/dashboard"
+            element={
+              <div>
+                <NavBar />
+                <Dashboard />
+              </div>
+            }
+          />
+          <Route
+            exact
+            path="/tools"
+            element={
+              <div>
+                <NavBar />
+                <Tools />
+                <Footer />
+              </div>
+            }
+          />
+          <Route exact path="/" element={<ComingSoon />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signin" element={<SignIn />} />
+          <Route
+            exact
+            path="/resetpassword"
+            element={
+              <ResetProvider>
+                <ResetPassword />
+              </ResetProvider>
+            }
+          />
+          <Route exact path="/support" element={<Support />} />
+          <Route
+            path="*"
+            element={
+              <div>
+                <NavBar />
+                <Error />
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

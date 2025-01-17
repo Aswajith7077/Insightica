@@ -8,12 +8,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/Components/UI/card"
+} from "@/components/ui/card"
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/Components/UI/chart"
+} from "@/components/ui/chart"
 const chartData = [
   { month: "January", desktop: 186 },
   { month: "February", desktop: 305 },

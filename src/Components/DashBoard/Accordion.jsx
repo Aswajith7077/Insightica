@@ -1,33 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { motion } from "framer-motion";
 
 const Accordion = ({ value }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   return (
-    <div>
+    <div className=" my-3 bg-white p-10  rounded-3xl">
       <div
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className={`flex flex-row w-[22rem] font-[lato] font-semibold text-lg items-center gap-3 cursor-pointer`}
+        className={`flex flex-row w-full font-[lato] font-semibold text-lg  items-center gap-3 cursor-pointer`}
       >
         {isCollapsed && <IoIosArrowForward size={24} />}
         {!isCollapsed && <IoIosArrowDown size={24} />}
-        <motion.h1
-          whileHover={{ y: -2, color: "#2563eb" }}
-          className={!isCollapsed ? "text-blue-700" : ""}
-        >
-          {value.title}
-        </motion.h1>
+        <h1 className="text-lg font-[lato] hover:text-blue-600 font-semibold">{value.title}</h1>
       </div>
       {!isCollapsed && (
         <motion.p
           initial={{ y: -10 }}
           whileInView={{ y: 0, transitionDuration: 0.5 }}
-          className="ml-10 my-3 w-[20rem]"
+          className="font-[source sans 3] font-medium text-gray-600 my-5 ml-10"
         >
           {value.content}
         </motion.p>
       )}
+
+      {/* <div className="my-3 bg-white border p-10  rounded-3xl">
+        <p className="font-[source sans 3] font-medium text-gray-600 my-3 ml-10">
+          {value.content}
+        </p>
+      </div> */}
+      {!isCollapsed && <div></div>}
     </div>
   );
 };

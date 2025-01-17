@@ -1,12 +1,12 @@
 import React from "react";
-import { globeConfig } from "@/Constants/index.js";
-import { sampleArcs } from "@/Constants/index.js";
-import { FlipWords } from "./UI/flip-words.jsx";
+import { globeConfig } from "@/constants/Globe.js";
+import { sampleArcs } from "@/constants/Globe.js";
 
-import { AppName } from "@/Constants/index.js";
+import { AppName } from "@/constants/index.js";
+import {FlipWords} from "@/components/ui/flip-words.jsx";
 
 const World = React.lazy(() =>
-  import("./UI/globe").then((m) => ({ default: m.World }))
+  import("./ui/globe").then((m) => ({ default: m.World }))
 );
 
 

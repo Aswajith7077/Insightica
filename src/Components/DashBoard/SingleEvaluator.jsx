@@ -1,77 +1,137 @@
-import React,{useState} from 'react';
-import Select from 'react-select';
-import { tickers } from '@/Constants';
-import { motion } from 'framer-motion';
-import axios from 'axios';
+import {Component, useState} from "react";
+import { motion } from "framer-motion";
+import BarChartTime from "@/components/charts/BarChartTime";
+import HeatMap from "@/components/charts/HeatMap";
+import BarChartStock from "@/components/charts/BarChartStock";
+import Radar from "@/components/charts/RadarChart";
+import { Tooltip } from "react-tooltip";
 
 
-const stocks = tickers.map((value)=>{
-	return {
-		"label":value,
-		"value":value
-	}
-})
-
-const conditions = [];
-
-for(var i = 0;i <= 32;i++)
-	conditions.push({value:i,label:i})
+import { FaCircleInfo } from "react-icons/fa6";
 
 
-const url = "http://127.0.0.1:8000/api/tools/singlepredictor/";
+import { performanceMatrix,metricWheel,trendCharts,correlationArc } from "@/constants/ToolTip";
+import * as PropTypes from "prop-types";
 
 
+const options = [
+  "Performance Matrix",
+  "Metric Wheel",
+  "Trend Chart(Stock Fixed)",
+  "Trend Chart(Time Fixed)"
+];
 
+const toolTipTexts = [performanceMatrix,metricWheel,trendCharts,correlationArc];
 
-const Inputs = () => {
-
-	const [tickers,setTickers] = useState([]);
-	const [condition,setConditions] = useState([]);
-	const [ticker_id,setTickerId] = useState(-1);
-	const [duration,setDuration] = useState(-1);
-
-
-	const validateInput = () => {
-		let result = condition.map((value)=>{
-			return value.label;
-		});
-
-		console.log(result);
-
-
-		const req = {
-			stock_names: tickers.map(value => value.label),
-			condition_ids: condition.map(value => value.label),
-			ticker_size: ticker_id,
-			duration: duration
-		};
-		axios.post(url,req)
-			.then(req=>console.log(req))
-			.catch(error=>console.log(error));
-	}
-
-
-	return <div className="flex flex-col">
-		<Select isMulti options={stocks} onChange={value => setTickers(value)}/>
-		<Select isMulti options={conditions} onChange={value => setConditions(value)}/>
-		<input type="number" name="ticker_id" onChange={(e)=>setTickerId(e.target.value)}/>
-		<input type="number" name="duration" onChange={e => setDuration(e.target.value)}/>
-		<motion.button
-			className=''
-			onClick={()=>validateInput()}
-			>
-			Submit
-		</motion.button>
-	</div>
+class Options extends Component {
+    render() {
+        let {option, className, onClick, toolTipText} = this.props;
+        return (
+            <motion.button
+                className={`flex flex-wrap  items-center py-3 px-5 gap-2 mt-2 mb-1 rounded-2xl font-[lato] font-semibold text-md ${className}`}
+                whileHover={{scale: 1.04, transition: {duration: 0.2}}}
+                whileTap={{scale: 0.99, transition: {duration: 0.2}}}
+                onClick={onClick}
+            >
+                {option}
+                <FaCircleInfo
+                    data-tooltip-id="tools-tooltip"
+                    data-tooltip-content={toolTipText}
+                    className={'outline-none'}
+                />
+            </motion.button>
+        );
+    }
 }
 
+Options.propTypes = {
+    option: PropTypes.any,
+    className: PropTypes.string,
+    onClick: PropTypes.any,
+    toolTipText: PropTypes.any
+}
 
-const SingleEvaluator = () => {
+Options.defaultProps = {className: ''}
+
+const SingleEvaluator = (x) => {
+
+  const [currentTool,setCurrentTool] = useState(0);
+
+
   return (
-    <div>
-      <Inputs />
+    <div className="flex flex-col h-full w-full">
+      <Tooltip id="visualizer-tooltip" />
+      <div className="flex flex-row gap-2 mb-1 text-white mx-5 w-full ">
+        {options.map((value, key) => {
+          return (
+            <Options
+              key={key}
+              option={value}
+              className={`${currentTool === key ? "bg-white text-black" : ""}`}
+              onClick={() => setCurrentTool(key)}
+              toolTipText={toolTipTexts[key]}
+            />
+          );
+        })}
+      </div>
+      <div className="flex flex-col w-full h-full rounded-[30px] bg-[#f6f8fb]">
+        {!x.response && (
+          <div className="flex flex-col h-full items-center justify-center">
+            <h1 className="font-[source sans 3] font-bold text-xl">
+              No Input found
+            </h1>
+            <p className="font-[source sans 3] font-semibold text-md">
+              Provide Input in the above fields to visualize
+            </p>
+          </div>
+        )}
+        {x.response && (
+          <div className="flex flex-col">
+            {currentTool === 0 && (
+              <HeatMap
+                history={x.history}
+                data={x.response}
+                conditions={x.selectedCondition.map(value => `condition_${value.label}`)}
+                tickers={x.selectedTickers}
+              />
+            )}
+            {currentTool === 1 && (
+              <Radar
+                history={x.history}
+                data={x.response}
+                tickers={x.selectedTickers}
+                conditions={x.selectedCondition.map(
+                  (value) => `condition_${value.label}`
+                )}
+              />
+            )}
+
+            {currentTool === 2 && (
+              <BarChartStock
+                history={x.history}
+                data={x.response}
+                tickers={x.selectedTickers}
+                conditions={x.selectedCondition.map(
+                  (value) => `condition_${value.label}`
+                )}
+              />
+            )}
+
+            {currentTool === 3 && (
+              <BarChartTime
+                history={x.history}
+                data={x.response}
+                tickers={x.selectedTickers}
+                conditions={x.selectedCondition.map(
+                  (value) => `condition_${value.label}`
+                )}
+              />
+            )}
+          </div>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default SingleEvaluator;

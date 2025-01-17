@@ -1,126 +1,24 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { IoCheckmarkDone } from "react-icons/io5";
-// import { description } from "../PieChartComponent";
+import { pricing_values } from "@/constants";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
-const pricing_values = [
-  {
-    title: "Single Evaluator",
-    link: "/singleeval",
-    description:
-      "Only one condition variable and show the performance of the resultant pairs of conditions ",
-    tools: [
-      {
-        title: "1 Variable Condition",
-        description: ""
-      },
-      {
-        title: "Heat Map Representation",
-        description:
-          "The columns of the heat map will represent the individual stocks, the rows will represent the conditions"
-      },
-      {
-        title: "Radial Graph Representation",
-        description:
-          "The graph will display the data for 6 metrics using 6 coloured lines (one colour for each metric), and each spoke will represent a condition."
-      },
-      {
-        title: "Bar Graph Representation (Stock Fixed)",
-        description:
-          "Time(history) is along the x-axis and the value along the y-axis is a given metric (evaluating performance of the selected conditions) "
-      },
-      {
-        title: "Bar Graph Representation (Time Fixed)",
-        description:
-          "Stocks are along the x-axis and the value along the y-axis is a given metric (evaluating performance of the selected conditions) "
-      }
-    ]
-  },
-  {
-    title: "Double Evaluator",
-    link: "/doubleeval",
-    description:
-      "Fixing ONE condition using a drop-down, and keep the other condition variable and show the performance of the resultant PAIRS of conditions ",
-    tools: [
-      {
-        title: "1 Fixed Condition + 1 Variable Condition",
-        description: ""
-      },
-      {
-        title: "Heat Map Representation",
-        description:
-          "The columns of the heat map will represent the individual stocks, the rows will represent the PAIR of conditions "
-      },
-      {
-        title: "Radial Graph Representation",
-        description:
-          "The graph will display the data for 6 metrics using 6 coloured lines (one colour for each metric), and each spoke will represent a PAIR of conditions "
-      },
-      {
-        title: "Bar Graph Representation (Stock Fixed)",
-        description:
-          "Time(history) is along the x-axis and the value along the y-axis is a given metric (evaluating performance of the selected PAIR of conditions)"
-      },
-      {
-        title: "Bar Graph Representation (Time Fixed)",
-        description:
-          "Stocks are along the x-axis and the value along the y-axis is a given metric (evaluating performance of the selected PAIR of conditions)"
-      },
-      {
-        title: "Chord Diagram",
-        description:
-          "Each arc on the circumference represents one condition.\nEach band between two arcs represents how well the PAIR of conditions perform according to the given metric for the given stock (indicated by the thickness of the band)"
-      }
-    ]
-  },
-  {
-    title: "Triple Evaluator",
-    link:'/tripleeval',
-    description:
-      "Fixing TWO condition using a drop-down, and keep the other condition variable and show the performance of the resultant TRIPLETS of conditions ",
-    tools: [
-      {
-        title: "2 Fixed Condition + 1 Variable Condition",
-        description: ""
-      },
-      {
-        title: "Heat Map Representation",
-        description:
-          "The columns of the heat map will represent the individual stocks, the rows will represent the TRIPLET of conditions "
-      },
-      {
-        title: "Radial Graph Representation",
-        description:
-          "The graph will display the data for 6 metrics using 6 coloured lines (one colour for each metric), and each spoke will represent a TRIPLET of conditions "
-      },
-      {
-        title: "Bar Graph Representation (Stock Fixed)",
-        description:
-          "Time(history) is along the x-axis and the value along the y-axis is a given metric (evaluating performance of the selected TRIPLET of conditions)"
-      },
-      {
-        title: "Bar Graph Representation (Time Fixed)",
-        description:
-          "Stocks are along the x-axis and the value along the y-axis is a given metric (evaluating performance of the selected TRIPLET of conditions)"
-      },
-      {
-        title: "Chord Diagram",
-        description:
-          "Each arc on the circumference represents one condition.\nEach band between two arcs represents how well the TRIPLET of conditions perform according to the given metric for the given stock (indicated by the thickness of the band)"
-      }
-    ]
-  }
-];
+import { useNavigate } from "react-router-dom";
 
 
-const Points = ({content}) => {
-  const [isCollapsed,setIsCollapsed] = useState(false);
+import { FaArrowRight } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoCheckmarkDone } from "react-icons/io5";
+import { useAuth } from "@/auth/AuthContext";
+
+
+const Points = ({ content }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   return (
-    <div >
+    <div>
       <div className="flex flex-row font-[lato] font-semibold text-[17px] items-center my-2 gap-5 ">
-        <IoCheckmarkDone size={28} />
+        {!isCollapsed && <IoIosArrowForward size={22} />}
+        {isCollapsed && <IoIosArrowDown size={22}/>}
         <motion.h1
           whileHover={{ y: -3, color: "#2563eb" }}
           whileTap={{ scale: 0.95 }}
@@ -130,23 +28,43 @@ const Points = ({content}) => {
           {content.title}
         </motion.h1>
       </div>
-      {isCollapsed && <motion.p initial={{y:-10}} whileInView={{y:0,transitionDuration:2}} className=" ml-[12%] text-justify my-4">{content.description}</motion.p>}
+      {isCollapsed && (
+        <motion.p
+          initial={{ y: -10 }}
+          whileInView={{ y: 0, transitionDuration: 2 }}
+          className=" ml-[12%] text-justify my-4"
+        >
+          {content.description}
+        </motion.p>
+      )}
     </div>
   );
+};
+
+
+const handleToolsNavigation = (link,auth,navigate) => {
+  
+  // if(auth.user === undefined){
+  //   alert('Sign In to User the tools')
+  //   return;
+  // }
+  navigate('/tools')
 }
 
-const Button = ({ text,link}) => {
+const Button = ({ text, link }) => {
+  const navigate = useNavigate();
+  const auth = useAuth();
   return (
-
-    <Link to={link}>
+    // <Link to={"/tools"}>
       <motion.button
         whileHover={{ stroke: "#183f8c", shadow: "" }}
         whileTap={{ scale: 0.95 }}
+        onClick={() => handleToolsNavigation(link,auth,navigate)}
         className="rounded-[15px] border-1 border-black bg-[#0d0e13] hover:border-blue-800 w-full py-4 my-10 font-[lato] font-bold text-md text-white"
       >
         {text}
       </motion.button>
-    </Link>
+    // </Link>
   );
 };
 
@@ -156,27 +74,76 @@ const Card = ({ content }) => {
   return (
     <motion.div
       // whileHover={{scale:1.02}}
-      className="rounded-[20px] w-[30rem] h-full my-[5%]  border-1 px-[2%] py-10 bg-white"
+      className="rounded-[20px] w-full lg:w-[33rem] h-[65rem] my-[5%] border-1 px-10 lg:px-[2%] py-10 bg-white"
     >
       <h1 className="text-[lato] font-semibold text-3xl text-center">
         {content.title}
       </h1>
-      <p className="text-center mt-10">{content.description}</p>
-      <Button text="Try Now" link={content.link}/>
-      {content.tools.map((value,key)=>{
-        return <Points content={value} key={key}/>
-      })}
+
+      <p className=" mt-10 text-center font-[lato] italic font-semibold text-lg">
+        {`"${content.quotes}"`}
+      </p>
+      <p className="text-center font-[lato] font-semibold text-lg text-gray-500 mt-5">
+        {content.description}
+      </p>
+
+      <Button text="Try Now" link={content.link} />
+
+      <h2 className="font-[lato] font-semibold text-xl">Key Highlights</h2>
+      <ul className="my-5">
+        {content.keyHighlights.map((value, key) => {
+          return <Points content={value} key={key} />;
+        })}
+      </ul>
+
+      <h2 className="font-[lato] font-semibold text-xl mt-10">
+        Why Should I Use
+      </h2>
+      <ul className="my-5 items-start justify-start">
+        {content.whyShouldIUse.map((value, key) => {
+          return (
+            <li key={key} className="flex flex-row items-start justify-start gap-3 my-2">
+              <FaArrowRight className="mt-1 " size={20} />
+              <p className="font-semibold font-[source sans 3] text-gray-600">
+                {value}
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+
+      <h2 className="font-[lato] font-semibold text-xl mt-10">
+        Take Aways
+      </h2>
+      <ul className="my-5 items-start justify-start">
+        {content.takeAways.map((value, key) => {
+          return (
+            <li
+              key={key}
+              className="flex flex-row items-start justify-start gap-3 my-2"
+            >
+              <IoCheckmarkDone size={28} />
+              <p className="font-semibold font-[source sans 3] text-gray-600">
+                {value}
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+      {/* {content.tools.map((value, key) => {
+        return <Points content={value} key={key} />;
+      })} */}
     </motion.div>
   );
 };
 
-const Pricing = ({id}) => {
+const Pricing = ({ id }) => {
   return (
-    <div className="flex flex-col my-[10%]" id={id}>
-      <h1 className="font-[montserrat] text-center font-semibold text-4xl">
+    <div className="flex flex-col my-[10%] mx-[3%] " id={id}>
+      <h1 className="font-[montserrat] text-center my-10 lg:my-0 font-semibold text-4xl">
         Meet our Latest Tools
       </h1>
-      <div className="flex flex-row justify-center gap-10 mx-10">
+      <div className="flex flex-col items-center lg:items-start h-full lg:flex-row justify-center gap-10 mx-10">
         {pricing_values.map((value, key) => {
           return <Card key={key} content={value} />;
         })}
