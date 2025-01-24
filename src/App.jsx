@@ -29,7 +29,7 @@ function App() {
             element={
               <div>
                 <NavBar />
-                <Documentation />
+                {/* <Documentation /> */}
               </div>
             }
           />
