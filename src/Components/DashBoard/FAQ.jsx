@@ -103,16 +103,10 @@ const FAQ = ({ className, id }) => {
         Frequently Asked Questions
       </h1>
       <div className="flex flex-row justify-center my-10 text-lg">
-        <p className="">Have more questions? Visit Our</p>
-        <motion.a
-          whileHover={{
-            y: -7,
-            color: ""
-          }}
-          className="mx-5 font-[lato] text-lg font-semibold hover:cursor-pointer"
-        >
+        <p className="font-[montserrat]  text-lg">Have more questions? Visit Our</p>
+        <button className="mx-1 font-[montserrat] text-lg text-blue-700 hover:text-blue-500 font-semibold hover:cursor-pointer">
           Get Help
-        </motion.a>
+        </button>
       </div>
       <div className="flex flex-col mx-[5%] lg:flex-row justify-center gap-10 ">
         <motion.div className="flex flex-col my-5 w-full">

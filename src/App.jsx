@@ -12,8 +12,8 @@ import Tools from "@/components/dashboard/Tools";
 import Footer from "@/components/dashboard/Footer";
 import Error from "@/components/dashboard/Error";
 import ResetPassword from "@/components/ResetPassword";
-import Support from "./components/dashboard/Support";
-import { ResetProvider } from "./auth/ResetContext";
+import Support from "@/components/dashboard/Support";
+import { ResetProvider } from "@/auth/ResetContext";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -48,7 +48,7 @@ function App() {
             path="/tools"
             element={
               <div>
-                <NavBar />
+                <NavBar isSticky={false} />
                 <Tools />
                 <Footer />
               </div>

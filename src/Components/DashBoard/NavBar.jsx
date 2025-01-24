@@ -49,7 +49,7 @@ const handleSignOut = async (auth) => {
   }
 };
 
-const NavBar = () => {
+const NavBar = ({isSticky = true}) => {
   const navigate = useNavigate();
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [signInMenu, setSignInMenu] = useState(false);
@@ -63,7 +63,9 @@ const NavBar = () => {
   // console.log(auth);
 
   return (
-    <navbar className="navbar fixed flex flex-row items-center justify-between w-full px-10 py-5 text-white bg-[#182433] z-50">
+    <navbar
+      className={`navbar ${isSticky ? "fixed" : ""} flex flex-row items-center justify-between w-full px-10 py-5 text-white bg-[#182433] z-50`}
+    >
       <h1 className="font-[lato] font-semibold text-3xl">Insightica</h1>
       <div
         className={` justify-self-center ${!auth.user ? "translate-x-20" : ""} top-[30px] flex flex-row font-[lato] gap-10 font-semibold text-lg items-center justify-center`}
@@ -98,7 +100,7 @@ const NavBar = () => {
 
         {isMenuOpened && (
           <div
-            className={`flex flex-col top-[90%] ${auth.user === undefined ? "right-[270px]" : "right-[100px]"} absolute rounded-2xl border bg-white text-black p-5  gap-5`}
+            className={`flex flex-col ${isSticky ? "top-[90%]" : "top-20"} ${auth.user === undefined ? "right-[270px]" : "right-[100px]"} absolute rounded-2xl border bg-white text-black p-5  gap-5 z-50`}
           >
             {menuLinks.map((value, key) => {
               return (
@@ -155,7 +157,9 @@ const NavBar = () => {
           </motion.div>
         )}
         {auth.user && signInMenu && (
-          <div className="flex flex-col p-5 absolute items-center bg-white border right-[40px] top-[90%] text-black rounded-2xl">
+          <div
+            className={`flex flex-col ${isSticky ? "top-[90%]" : "top-20"} p-5 absolute items-center bg-white border right-[40px] top-[90%] text-black rounded-2xl z-50`}
+          >
             <h1 className="font-[lato] font-semibold text-2xl">
               {auth.user.name}
             </h1>

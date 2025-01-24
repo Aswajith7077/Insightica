@@ -74,7 +74,7 @@ const Card = ({ content }) => {
   return (
     <motion.div
       // whileHover={{scale:1.02}}
-      className="rounded-[20px] w-full lg:w-[33rem] h-[65rem] my-[5%] border-1 px-10 lg:px-[2%] py-10 bg-white"
+      className="rounded-[20px] w-full lg:w-[33rem] h-[60rem] my-[5%] border-1 px-10 lg:px-[2%] py-10 bg-white"
     >
       <h1 className="text-[lato] font-semibold text-3xl text-center">
         {content.title}
@@ -139,7 +139,7 @@ const Card = ({ content }) => {
 
 const Pricing = ({ id }) => {
   return (
-    <div className="flex flex-col my-[10%] mx-[3%] " id={id}>
+    <div className="flex flex-col mt-[10%] mx-[3%] " id={id}>
       <h1 className="font-[montserrat] text-center my-10 lg:my-0 font-semibold text-4xl">
         Meet our Latest Tools
       </h1>

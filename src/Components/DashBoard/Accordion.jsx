@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const Accordion = ({ value }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   return (
-    <div className=" my-3 bg-white p-10  rounded-3xl">
+    <div className=" my-1 p-5  rounded-xl">
       <div
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={`flex flex-row w-full font-[lato] font-semibold text-lg  items-center gap-3 cursor-pointer`}

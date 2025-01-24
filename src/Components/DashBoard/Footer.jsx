@@ -41,12 +41,12 @@ class Footer extends React.Component {
         className="flex flex-col text-[#f6f8fb] pt-[5%] items-center bg-[#182433]"
         id={id}
       >
-        <div className="flex flex-col lg:flex-row w-full px-[10%] lg:px-[5%] py-[4%]">
+        <div className="flex flex-col lg:flex-row w-full px-[10%] lg:px-[5%]">
           <div className="flex flex-col mb-10 md:mb-0 w-full lg:w-1/3">
-            <h1 className="text-4xl font-[lato] font-semibold mb-[15%] mr-[5%]">
+            <h1 className="text-4xl font-[lato] font-semibold mb-5 lg:mb-[15%] mr-[5%]">
               Insightica
             </h1>
-            <h1 className="ml-5">Get our Insightics right in your inbox!</h1>
+            <h1 className="lg:ml-5">Get our Insightics right in your inbox!</h1>
             <div className="flex flex-row border-2 lg:w-2/3 pl-5 justify-between rounded-full mt-20 lg:my-10 focus:border-white">
               <input
                 type="email"

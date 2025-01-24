@@ -1,16 +1,9 @@
 import React, { useEffect } from "react";
-import Testimonials from "@/components/dashboard/Testimonials";
-// import FounderInfo from "@/components/dashboard/FounderInfo";
 import FAQ from "@/components/dashboard/FAQ";
-import { HorizontalChart } from "@/components/dashboard/HorizontalBarChart";
 import Pricing from "@/components/dashboard/Pricing";
 import Footer from "@/components/dashboard/Footer";
-import { LineGraph } from "@/components/dashboard/LineGraph";
 import BarChart from "@/components/charts/BarChart";
-// import { ActiveUsers } from "@/components/dashboard/ActiveUsers";
-// import { Profits } from "@/components/dashboard/Profits";
-import { OverallUsages } from "@/components/dashboard/OverallUsages";
-// import NavBar from "@/components/dashboard/NavBar";
+
 import Banner from "@/components/dashboard/Banner";
 
 import { useLocation } from "react-router-dom";
@@ -64,7 +57,7 @@ const DashBoard = () => {
         {/* <OverallUsages /> */}
       </div>
       <Pricing id="tools" />
-      <div className="flex flex-row mx-[7%] gap-[5%] my-[5%]	">
+      {/* <div className="flex flex-row mx-[7%] gap-[5%] my-[5%]	">
         <div className="flex flex-col lg:w-1/2">
           <h1 className="font-[montserrat] font-semibold text-center lg:text-left text-5xl my-[5%]">
             We are the leading Trade Optimizers.
@@ -80,12 +73,12 @@ const DashBoard = () => {
           </p>
         </div>
         <HorizontalChart />
-      </div>
+      </div> */}
       {/* <FounderInfo id={"founder"}/> */}
-      <h1 className="text-4xl font-[montserrat] text-center  font-semibold mt-[20%] lg:mt-48 mb-20">
+      {/* <h1 className="text-4xl font-[montserrat] text-center  font-semibold mt-[20%] lg:mt-48 mb-20">
         Our Investors say about us
-      </h1>
-      <Testimonials id="testimonials" />
+      </h1> */}
+      {/* <Testimonials id="testimonials" /> */}
       <FAQ id={"faq"} className={"py-[5%] mb-[10%]"} />
       <Footer id="contact" />
     </div>

@@ -220,7 +220,7 @@ const Tools = () => {
   ]);
 
   return (
-    <div className="pt-[5%] w-full bg-slate-700 " id="toolbanner">
+    <div className="pt-1 w-full bg-slate-700 " id="toolbanner">
       <Tutorials visible={drawerState} setVisible={setDrawerState} />
       <Greet loggedUser={auth.user.name} className=" " />
       <div className="bg-slate-700 ">

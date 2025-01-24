@@ -19,6 +19,12 @@ export default {
         ],
         'montserrat':[
           'Monserrat'
+        ],
+        'source sans 3':[
+          'Source Sans 3'
+        ],
+        'open sans':[
+          'Open Sans'
         ]
       },
       boxShadow: {
