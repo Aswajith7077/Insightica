@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { AuthProvider } from "@/auth/AuthContext";
 
-import Documentation from "@/components/dashboard/Documentation.jsx";
+// import Documentation from "@/components/dashboard/Documentation.jsx";
 import Dashboard from "@/components/dashboard/DashBoard.jsx";
 import ComingSoon from "@/components/ComingSoon.jsx";
 import Login from "@/components/Login.jsx";
