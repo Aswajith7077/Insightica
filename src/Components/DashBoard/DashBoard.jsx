@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import { scroller } from "react-scroll";
 import {  useAuth } from "@/auth/AuthContext";
 import AreaChart from "@/components/charts/AreaChart";
-import PieChart from "../charts/PieCharts";
+import PieChart from "@/components/charts/PieCharts";
 
 const DashBoard = () => {
   const location = useLocation();

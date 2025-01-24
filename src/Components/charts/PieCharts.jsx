@@ -1,5 +1,5 @@
 import ReactApexChart from "react-apexcharts";
-import Select from "react-select";
+// import Select from "react-select";
 import { metrics, metricsMemo, tickers } from "@/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
