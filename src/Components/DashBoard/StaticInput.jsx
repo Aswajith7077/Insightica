@@ -1,81 +1,109 @@
 import { Component, useEffect, useState } from "react";
-import { tickers } from "@/constants/index.js";
+import { metrics, tickers, toolsMap } from "@/constants/index.js";
 import { motion } from "framer-motion";
 import Select from "react-select";
 import axios from "axios";
+import Config from "/config/config";
 
 import {
   pairPerformanceAnalyzer,
   conditionalEvaluator,
-  triadInsights
+  triadInsights,
 } from "@/constants/ToolTip";
 
 import * as PropTypes from "prop-types";
-import StockSelect from "@/components/tools/StockSelect.jsx";
+import StockSelect from "@/components/tools/StockSelect";
+// import { api } from "@/api/api.js";
+// import * as res from "autoprefixer";
 
 const tools = [
+  "Single Predictor",
   "Condition Evaluator",
   "Pair Performance Analyzer",
-  "Triad Insights"
+  "Triad Insights",
+  "Back Test",
 ];
 
+const serverUrl = Config.serverUrl;
+const singleEvaluatorUrl = Config.singleEvalUrl;
+const doubleEvaluatorUrl = Config.doubleEvalUrl;
+const tripleEvaluatorUrl = Config.tripleEvalUrl;
+const backTestUrl = Config.backTestUrl;
+const singlePredictorUrl = Config.singlePredUrl;
+
+const tickerMetrics = ["Days", "Minutes"];
+
 const toolTipTexts = [
+  "Tool Tip for Single Predictor",
   conditionalEvaluator,
   pairPerformanceAnalyzer,
-  triadInsights
+  triadInsights,
+  "Tool Tip for Back Test",
 ];
 
 const stocks = tickers.map((value) => {
   return {
     label: value,
-    value: value
+    value: value,
   };
 });
 
-const handleSubmit = (
+const handleSubmit = async (
   singleReq,
   doubleReq,
   tripleReq,
+  singlePredictorReq,
+  backTestReq,
   setSingleResponse,
   setDoubleResponse,
   setTripleResponse,
+  setSinglePredictorResponse,
+  setBackTestResponse,
   setHistory,
-  selectedTool
+  selectedTool,
 ) => {
-  
-  if (selectedTool === 0) {
+  // console.log(`Server Url : ${serverUrl}` + singlePredictorUrl);
+  console.log(toolsMap[selectedTool]);
+  if (toolsMap[selectedTool] === "SINGLE_EVAL") {
+    // console.log(singleReq);
     axios
-      .post(
-        "http://127.0.0.1:8000/api/tools/single_condition_analyzer/",
-        singleReq
-      )
+      .post(`${serverUrl}${singleEvaluatorUrl}`, singleReq)
       .then((res) => {
         setSingleResponse(res.data);
         setHistory(Object.keys(res.data).length);
       })
       .catch((err) => alert(err.message));
-  } else if (selectedTool === 1) {
+  } else if (toolsMap[selectedTool] === "DOUBLE_EVAL") {
+    // console.log(doubleReq);
     axios
-      .post(
-        "http://127.0.0.1:8000/api/tools/double_condition_analyzer/",
-        doubleReq
-      )
+      .post(`${serverUrl}${doubleEvaluatorUrl}`, doubleReq)
       .then((res) => {
         setDoubleResponse(res.data);
         setHistory(Object.keys(res.data).length);
       })
       .catch((err) => alert(err));
-  } else {
+  } else if (toolsMap[selectedTool] === "TRIPLE_EVAL") {
+    // console.log(tripleReq);
     axios
-      .post(
-        "http://127.0.0.1:8000/api/tools/triple_condition_analyzer/",
-        tripleReq
-      )
+      .post(`${serverUrl}${tripleEvaluatorUrl}`, tripleReq)
       .then((res) => {
+        console.log(res);
         setTripleResponse(res.data);
         setHistory(Object.keys(res.data).length);
       })
       .catch((err) => alert(err));
+  } else if (toolsMap[selectedTool] === "SINGLE_PRED") {
+    axios
+      .post(`${serverUrl}${singlePredictorUrl}`, singlePredictorReq)
+      .then((res) => {
+        setSinglePredictorResponse(res.data);
+      });
+  } else if (toolsMap[selectedTool] === "BACK_TEST") {
+    axios
+      .post(`${serverUrl}${backTestUrl}`, singlePredictorReq)
+      .then((response) => {
+        setBackTestResponse(response.data);
+      });
   }
 };
 
@@ -85,30 +113,47 @@ class StaticInput extends Component {
       setDrawerState,
       fixedCondition1,
       fixedCondition2,
-      conditions,
       setFixedCondition1,
       setFixedCondition2,
-      singleReq,
-      doubleReq,
-      tripleReq,
+      setCondition,
       setTickerId,
       setTickers,
-      setCondition,
       setDuration,
       setSingleResponse,
       setDoubleResponse,
       setTripleResponse,
+      setBackTestResponse,
+      setSinglePredictorResponse,
       setHistory,
+      conditions,
       tickerId,
       duration,
-      selectedTool
+      singleReq,
+      doubleReq,
+      singlePredictorReq,
+      backTestReq,
+      setSinglePredictorReq,
+      setBackTestReq,
+      tripleReq,
+      selectedTool,
+      tickerMetric,
+      setTickerMetric,
+      singleStock,
+      setSingleStock,
+      whatToOptimize,
+      setWhatToOptimize,
+
+      stoploss,
+      setStoploss,
+      brokerage,
+      setBrokerage,
     } = this.props;
     return (
-      <div className="w-full lg:w-[31%]  flex flex-col h-full px-10 pt-10 pb-10 rounded-[30px] bg-[#f6f8fb] mr-5">
+      <div className="w-full lg:w-[31%]  flex flex-col h-full px-10 pt-10 pb-10 rounded-xl bg-[#f6f8fb] mr-5">
         <h1 className="font-[lato] font-semibold text-3xl mb-3">
           {tools[selectedTool]}
         </h1>
-        <p className="font-[source sans 3] text-gray-600 font-medium text-md mt-5 mb-2">
+        <p className="font-[lato] text-gray-600 font-medium text-md mt-5 mb-2">
           {toolTipTexts[selectedTool]}
         </p>
         <motion.button
@@ -122,16 +167,34 @@ class StaticInput extends Component {
         <div className={"flex flex-row items-center gap-[5%]"}>
           <div className={"flex flex-col w-full "}>
             <h2 className="font-[lato] font-semibold text-lg ">Ticker Size</h2>
-            <input
-              type="number"
-              name="ticker_id"
-              value={tickerId}
-              min={1}
-              onChange={(e) =>
-                setTickerId(e.target.value ? e.target.value : tickerId)
-              }
-              className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-2xl border-2"
-            />
+            <div className="flex flex-row bg-white rounded-lg border-2">
+              <input
+                type="number"
+                name="ticker_id"
+                value={tickerId}
+                min={1}
+                onChange={(e) =>
+                  setTickerId(e.target.value ? e.target.value : tickerId)
+                }
+                className="w-1/2 px-3 font-[lato] font-semibold text-base py-3 rounded-lg"
+              />
+              <select
+                onChange={(e) =>
+                  setTickerMetric(
+                    e.target.value ? e.target.value : tickerMetric,
+                  )
+                }
+                className="w-1/2 cursor-pointer border-2 text-black outline-none py-1 px-1 rounded-lg my-1 mx-1 text-sm md:text-base font-[lato] font-semibold"
+              >
+                {tickerMetrics.map((val) => {
+                  return (
+                    <option value={val} className="bg-white py-2">
+                      {val}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
           </div>
 
           <div className={"flex flex-col w-full "}>
@@ -143,17 +206,20 @@ class StaticInput extends Component {
               onChange={(e) =>
                 setDuration(e.target.value ? e.target.value : duration)
               }
-              className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-2xl border-2"
+              className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-lg border-2"
             />
           </div>
         </div>
         <div
           className={
-            selectedTool === 0 ? "hidden" : "flex flex-col w-full mt-5"
+            toolsMap[selectedTool] !== "DOUBLE_EVAL" &&
+            toolsMap[selectedTool] !== "TRIPLE_EVAL"
+              ? "hidden"
+              : "flex flex-col w-full mt-5"
           }
         >
           <h2 className="font-[lato] font-semibold text-lg">
-            {selectedTool === 1
+            {toolsMap[selectedTool] === "DOUBLE_EVAL"
               ? "Condition to be fixed"
               : "Pair of conditions to be fixed"}
           </h2>
@@ -161,8 +227,8 @@ class StaticInput extends Component {
             <div className="w-full ">
               <h2
                 className={
-                  selectedTool === 2
-                    ? "font-[source sans 3] mt-3 text-md"
+                  toolsMap[selectedTool] === "TRIPLE_EVAL"
+                    ? "font-[lato] mt-3 text-md"
                     : "hidden"
                 }
               >
@@ -176,16 +242,18 @@ class StaticInput extends Component {
                 max={32}
                 onChange={(e) =>
                   setFixedCondition1(
-                    e.target.value ? e.target.value : fixedCondition1
+                    e.target.value ? e.target.value : fixedCondition1,
                   )
                 }
-                className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-2xl border-2"
+                className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-lg border-2"
               />
             </div>
-            <div className={selectedTool === 2 ? "w-full" : "hidden"}>
-              <h2 className={"font-[source sans 3] mt-3 text-md"}>
-                Fix Condition 2
-              </h2>
+            <div
+              className={
+                toolsMap[selectedTool] === "TRIPLE_EVAL" ? "w-full" : "hidden"
+              }
+            >
+              <h2 className={"font-[lato] mt-3 text-md"}>Fix Condition 2</h2>
               <input
                 type="number"
                 name="duration"
@@ -194,10 +262,10 @@ class StaticInput extends Component {
                 max={32}
                 onChange={(e) =>
                   setFixedCondition2(
-                    e.target.value ? e.target.value : fixedCondition2
+                    e.target.value ? e.target.value : fixedCondition2,
                   )
                 }
-                className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-2xl border-2"
+                className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-lg border-2"
               />
             </div>
           </div>
@@ -211,6 +279,49 @@ class StaticInput extends Component {
           onChange={(value) => setCondition(value)}
           className="w-full font-[lato] font-semibold text-base py-3"
         />
+        {toolsMap[selectedTool] === "SINGLE_PRED" && (
+          <h2 className={"font-[lato] font-semibold text-lg mt-5"}>
+            What to Optimize{" "}
+          </h2>
+        )}
+        {toolsMap[selectedTool] === "SINGLE_PRED" && (
+          <Select
+            options={metrics.map((val) => {
+              return { label: val, value: val };
+            })}
+            value={whatToOptimize}
+            onChange={(value) => setWhatToOptimize(value)}
+            className="w-full font-[lato] font-semibold text-base py-3"
+          />
+        )}
+        {toolsMap[selectedTool] === "BACK_TEST" && (
+          <h2 className="font-[lato] font-semibold text-lg mt-5">Stop Loss</h2>
+        )}
+        {toolsMap[selectedTool] === "BACK_TEST" && (
+          <input
+            type={"number"}
+            min={0}
+            value={stoploss}
+            onChange={(e) =>
+              setStoploss(e.target.value ? e.target.value : stoploss)
+            }
+            className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-lg border-2"
+          />
+        )}
+        {toolsMap[selectedTool] === "BACK_TEST" && (
+          <h2 className="font-[lato] font-semibold text-lg mt-5">Brokerage</h2>
+        )}
+        {toolsMap[selectedTool] === "BACK_TEST" && (
+          <input
+            type={"number"}
+            min={0}
+            value={brokerage}
+            onChange={(e) =>
+              setBrokerage(e.target.value ? e.target.value : stoploss)
+            }
+            className="w-full px-3 font-[lato] font-semibold text-base py-3 rounded-lg border-2"
+          />
+        )}
         <h2 className="font-[lato] font-semibold text-lg mt-5">Stocks</h2>
         {/*<Select*/}
         {/*    isMulti*/}
@@ -218,7 +329,21 @@ class StaticInput extends Component {
         {/*    onChange={value => setTickers(value)}*/}
         {/*    className="w-full font-[lato] font-semibold text-base py-3"*/}
         {/*/>*/}
-        <StockSelect tickers={stocks} setTickers={setTickers} />
+
+        {toolsMap[selectedTool] !== "BACK_TEST" &&
+          toolsMap[selectedTool] !== "SINGLE_PRED" && (
+            <StockSelect tickers={stocks} setTickers={setTickers} />
+          )}
+        {(toolsMap[selectedTool] === "BACK_TEST" ||
+          toolsMap[selectedTool] === "SINGLE_PRED") && (
+          <Select
+            options={stocks}
+            value={singleStock}
+            onChange={(value) => setSingleStock(value)}
+            className="w-full font-[lato] font-semibold text-base py-3"
+          />
+        )}
+
         <motion.button
           whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
           whileTap={{ scale: 0.97, transition: { duration: 0.2 } }}
@@ -227,11 +352,15 @@ class StaticInput extends Component {
               singleReq,
               doubleReq,
               tripleReq,
+              singlePredictorReq,
+              backTestReq,
               setSingleResponse,
               setDoubleResponse,
               setTripleResponse,
+              setSinglePredictorResponse,
+              setBackTestResponse,
               setHistory,
-              selectedTool
+              selectedTool,
             )
           }
           className="font-[lato] font-semibold text-white text-lg bg-blue-600 py-3 my-3 px-10 w-auto rounded-xl"
@@ -254,7 +383,7 @@ StaticInput.propTypes = {
   setHistory: PropTypes.any,
   singleReq: PropTypes.any,
   DoubleReq: PropTypes.any,
-  TripleReq: PropTypes.any
+  TripleReq: PropTypes.any,
 };
 
 export default StaticInput;

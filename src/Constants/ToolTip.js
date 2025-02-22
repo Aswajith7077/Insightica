@@ -7,7 +7,7 @@ const triadInsights =
 
 
 
-// Tools tooltip
+// tools tooltip
 
 const performanceMatrix =
   "Compare multiple stocks or metrics at a glance with color-coded matrices showing condition strength and variability.";

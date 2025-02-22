@@ -17,9 +17,9 @@ const Email = () => {
       animate={{
         y: 0,
         opacity: 1,
-        transition: { duration: 0.5, delay: 0.75 }
+        transition: { duration: 0.5, delay: 0.75 },
       }}
-      className="flex flex-row items-center gap-6 my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-4 font-[source sans 3] "
+      className="flex flex-row items-center gap-6 my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-4 font-[lato] "
     >
       <MdEmail size={18} className="text-gray-500" />
       <input
@@ -29,7 +29,7 @@ const Email = () => {
         }}
         value={reset.email}
         placeholder="Email"
-        className="w-full font-[source sans 3] text-md font-semibold bg-white px-1 py-1 my-2 rounded-[15px]  outline-none"
+        className="w-full font-[lato] text-md font-semibold bg-white px-1 py-1 my-2 rounded-[15px]  outline-none"
       />
     </motion.div>
   );
@@ -43,9 +43,9 @@ const Password = () => {
       animate={{
         y: 0,
         opacity: 1,
-        transition: { duration: 0.5, delay: 1 }
+        transition: { duration: 0.5, delay: 1 },
       }}
-      className="flex flex-row items-center gap-6 my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-4 font-[source sans 3] "
+      className="flex flex-row items-center gap-6 my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-4 font-[lato] "
     >
       <IoMdLock size={18} className="text-gray-500" />
       <input
@@ -55,7 +55,7 @@ const Password = () => {
           reset.setPassword(event.target.value ? event.target.value : "");
         }}
         placeholder="New Password"
-        className="w-full font-[source sans 3] text-md font-semibold bg-white px-1 py-1 my-2 rounded-[15px]  outline-none"
+        className="w-full font-[lato] text-md font-semibold bg-white px-1 py-1 my-2 rounded-[15px]  outline-none"
       />
     </motion.div>
   );
@@ -69,9 +69,9 @@ const ConfirmPassword = () => {
       animate={{
         y: 0,
         opacity: 1,
-        transition: { duration: 0.5, delay: 1.25 }
+        transition: { duration: 0.5, delay: 1.25 },
       }}
-      className="flex flex-row items-center gap-6 my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-4 font-[source sans 3] "
+      className="flex flex-row items-center gap-6 my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-4 font-[lato] "
     >
       <IoMdLock size={18} className="text-gray-500" />
       <input
@@ -80,7 +80,7 @@ const ConfirmPassword = () => {
           reset.setConfirmPassword(event.target.value);
         }}
         placeholder="Confirm Password"
-        className="w-full font-[source sans 3] text-md px-1 font-semibold bg-white py-1 my-2 rounded-[15px]  outline-none"
+        className="w-full font-[lato] text-md px-1 font-semibold bg-white py-1 my-2 rounded-[15px]  outline-none"
       />
     </motion.div>
   );
@@ -95,9 +95,9 @@ const ResetRequest = () => {
         animate={{
           y: 0,
           opacity: 1,
-          transition: { duration: 0.5, delay: 0.5 }
+          transition: { duration: 0.5, delay: 0.5 },
         }}
-        className="font-[source sans 3] text-center text-sm mb-10 font-semibold"
+        className="font-[lato] text-center text-sm mb-10 font-semibold"
       >
         Don't Worry! Through your email we will a resend code, then you can
         reset your password
@@ -108,7 +108,7 @@ const ResetRequest = () => {
         animate={{
           y: 0,
           opacity: 1,
-          transition: { duration: 0.5, delay: 1 }
+          transition: { duration: 0.5, delay: 1 },
         }}
         whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
         whileTap={{ scale: 0.97, transition: { duration: 0.2 } }}
@@ -122,11 +122,11 @@ const ResetRequest = () => {
         animate={{
           y: 0,
           opacity: 1,
-          transition: { duration: 0.5, delay: 1.25 }
+          transition: { duration: 0.5, delay: 1.25 },
         }}
         className="flex flex-col md:flex-row justify-center items-center my-5 "
       >
-        <p className="font-semibold font-[source sans 3] text-md text-gray-500">
+        <p className="font-semibold font-[lato] text-md text-gray-500">
           Haven't recieved any link?
         </p>
         {/* <Link to="/login" className="mx-5"> */}
@@ -152,16 +152,16 @@ const PasswordSetter = () => {
         animate={{
           y: 0,
           opacity: 1,
-          transition: { duration: 0.5, delay: 0.5 }
+          transition: { duration: 0.5, delay: 0.5 },
         }}
-        className="flex flex-row items-center gap-2 font-[source sans 3]"
+        className="flex flex-row items-center gap-2 font-[lato]"
       >
-        <p className="font-[source sans 3] text-center text-sm font-semibold">
+        <p className="font-[lato] text-center text-sm font-semibold">
           We have sent you a 4-digit code to
         </p>
         <h3 className="font-semibold text-blue-500">{reset.email}</h3>
       </motion.div>
-      <p className="font-[source sans 3] text-center mb-10 text-sm font-semibold">
+      <p className="font-[lato] text-center mb-10 text-sm font-semibold">
         Don't share this code to anyone
       </p>
       <OTPInput
@@ -177,7 +177,7 @@ const PasswordSetter = () => {
                 width: 50,
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
               className="w-fit py-3 text-center rounded-xl mx-2 bg-white border text-black font-[lato] font-semibold text-lg"
             />
@@ -191,7 +191,7 @@ const PasswordSetter = () => {
         animate={{
           y: 0,
           opacity: 1,
-          transition: { duration: 0.5, delay: 1 }
+          transition: { duration: 0.5, delay: 1 },
         }}
         whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
         whileTap={{ scale: 0.97, transition: { duration: 0.2 } }}
@@ -208,7 +208,7 @@ const handleRequest = async (reset) => {
   reset.setIsSend(true);
   axios
     .post("http://127.0.0.1:8000/api/user/reset-password-request/", {
-      email: reset.email
+      email: reset.email,
     })
     .then((response) => {
       // console.log(response);
@@ -220,7 +220,7 @@ const handleRequest = async (reset) => {
             ? "Redirecting to Login page"
             : "Failed to Verify your Email",
         className:
-          "rounded-[15px] bg-emerald-100 dark:bg-emerald-500 font-[lato]"
+          "rounded-[15px] bg-emerald-100 dark:bg-emerald-500 font-[lato]",
       });
     })
     .catch((error) => {
@@ -228,7 +228,7 @@ const handleRequest = async (reset) => {
       reset.toast({
         title: "Email Verification Failed",
         description: `${error.message}`,
-        className: "rounded-[15px] bg-red-100 dark:bg-red-500 font-[lato]"
+        className: "rounded-[15px] bg-red-100 dark:bg-red-500 font-[lato]",
       });
     });
 };
@@ -238,14 +238,14 @@ const handleSetter = async (reset) => {
     reset.toast({
       title: "User Creation Failed",
       description: "Invalid Passwords",
-      className: "rounded-[15px] bg-red-100 dark:bg-emerald-500 font-[lato]"
+      className: "rounded-[15px] bg-red-100 dark:bg-emerald-500 font-[lato]",
     });
     return;
   }
   axios
     .post("http://127.0.0.1:8000/api/user/reset-password/", {
       token: reset.otp,
-      new_password: reset.password
+      new_password: reset.password,
     })
     .then((response) => {
       console.log(response);
@@ -257,7 +257,7 @@ const handleSetter = async (reset) => {
             ? "Redirecting to Login page"
             : "Failed to Verify your Email",
         className:
-          "rounded-[15px] bg-emerald-100 dark:bg-emerald-500 font-[lato]"
+          "rounded-[15px] bg-emerald-100 dark:bg-emerald-500 font-[lato]",
       });
       reset.navigate("/login");
     })
@@ -266,7 +266,7 @@ const handleSetter = async (reset) => {
       reset.toast({
         title: "Password Reset Failed",
         description: `${error.response.data.error}`,
-        className: "rounded-[15px] bg-red-100 dark:bg-red-500 font-[lato]"
+        className: "rounded-[15px] bg-red-100 dark:bg-red-500 font-[lato]",
       });
     });
 };
@@ -290,7 +290,7 @@ const ResetPassword = () => {
             animate={{
               y: 0,
               opacity: 1,
-              transition: { duration: 0.5, delay: 0.25 }
+              transition: { duration: 0.5, delay: 0.25 },
             }}
             className="font-[montserrat] font-semibold text-3xl text-center  my-10 "
           >

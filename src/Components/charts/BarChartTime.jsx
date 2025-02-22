@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { metrics, metricsMemo } from "@/constants";
 import Select from "react-select";
+import {Slider} from "@mui/material";
 
 const normalizeData = (x) => {
   const min = Math.min(...x);
@@ -40,13 +41,13 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
       return;
     }
 
-    setNormalizedXValues(normalizeData(xValues));
+    setNormalizedXValues(xValues);
   }, [selectedCondition, selectedMetric, selectedHistory, data]);
 
   const options = {
     chart: {
       height: 650,
-      type: "bar",
+      type: "line",
       toolbar: {
         show: false
       }
@@ -59,11 +60,23 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
         }
       }
     },
+    dataLabels: {
+      enabled: false,
+      style: {
+        colors: ["#FFFFFF"], // Text color
+        fontSize: "14px", // Custom font size
+        fontFamily: "Lato, sans-serif", // Custom font family
+        fontWeight: "bold" // Optional: Change font weight
+      },
+      dropShadow: {
+        enabled: false // Disable shadows on the text
+      }
+    },
     xaxis: {
       categories: data[`history_${selectedHistory}`]
         ? Object.keys(
             data[`history_${selectedHistory}`][selectedCondition] || {}
-          ).map((_, index) => `Day - ${index + 1}`)
+          ).map((_, index) => `${tickers[index]}`)
         : []
     },
     yaxis: {
@@ -81,18 +94,14 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
           <h2 className="font-semibold font-[lato] text-lg my-3">
             History Selector
           </h2>
-          <input
-            type="number"
-            min={1}
-            max={history}
-            value={selectedHistory}
-            onChange={(e) => {
-              const value = parseInt(e.target.value, 10);
-              if (value >= 1 && value <= history) {
-                setSelectedHistory(value);
+          <Slider
+              value={selectedHistory}
+              onChange={(e, val) =>
+                  setSelectedHistory(val ? val : selectedHistory)
               }
-            }}
-            className="w-full border-2 rounded-2xl px-3 py-3 font-[lato]"
+              valueLabelDisplay="auto"
+              min={1}
+              max={history - 1 ? history - 1 : history}
           />
         </div>
 
@@ -137,7 +146,7 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
               data: normalizedXValues
             }
           ]}
-          type="bar"
+          type="line"
           height={450}
         />
       </div>

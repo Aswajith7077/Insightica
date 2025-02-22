@@ -14,7 +14,7 @@ import {
   performanceMatrix,
   metricWheel,
   trendCharts,
-  correlationArc
+  correlationArc,
 } from "@/constants/ToolTip";
 import * as PropTypes from "prop-types";
 
@@ -23,14 +23,14 @@ const options = [
   "Metric Wheel",
   "Trend Chart(Stock Fixed)",
   "Trend Chart(Time Fixed)",
-  "Correlation Arc"
+  "Correlation Arc",
 ];
 
 const toolTipTexts = [
   performanceMatrix,
   metricWheel,
   trendCharts,
-  correlationArc
+  correlationArc,
 ];
 
 class Options extends Component {
@@ -38,7 +38,7 @@ class Options extends Component {
     let { option, className, onClick, toolTipText } = this.props;
     return (
       <motion.button
-        className={`flex flex-wrap items-center py-3 px-5 gap-2 mt-2 mb-1 rounded-2xl font-[lato] font-semibold text-md ${className}`}
+        className={`flex flex-wrap items-center py-3 px-5 gap-2 mt-2 mb-1 rounded-lg font-[lato] font-semibold text-md ${className}`}
         whileHover={{ scale: 1.04, transition: { duration: 0.2 } }}
         whileTap={{ scale: 0.99, transition: { duration: 0.2 } }}
         onClick={onClick}
@@ -59,7 +59,7 @@ Options.propTypes = {
   option: PropTypes.any,
   className: PropTypes.string,
   onClick: PropTypes.any,
-  toolTipText: PropTypes.any
+  toolTipText: PropTypes.any,
 };
 
 Options.defaultProps = { className: "" };
@@ -69,9 +69,9 @@ const DoubleEvaluator = (x) => {
 
   // console.log('Fixed , Selected : ',x.fixedCondition,x.selectedCondition);
 
-  useEffect(()=>{
-    console.log("Current Tool : ",currentTool);
-  },[currentTool])
+  useEffect(() => {
+    console.log("Current Tool : ", currentTool);
+  }, [currentTool]);
 
   // x.selectedCondition.map((value) => {
   //                 console.log(`condition_${x.fixedCondition}_${value.label}`);
@@ -86,20 +86,18 @@ const DoubleEvaluator = (x) => {
             <Options
               key={key}
               option={value}
-              className={`${currentTool === key ? "bg-white text-black" : ""}`}
+              className={`${currentTool === key ? "bg-white text-black" : "border-2"}`}
               onClick={() => setCurrentTool(key)}
               toolTipText={toolTipTexts[key]}
             />
           );
         })}
       </div>
-      <div className="flex flex-col w-full h-full rounded-[30px] bg-[#f6f8fb]">
+      <div className="flex flex-col w-full h-full rounded-xl bg-[#f6f8fb]">
         {!x.response && (
           <div className="flex flex-col h-full items-center justify-center">
-            <h1 className="font-[source sans 3] font-bold text-xl">
-              No Input found
-            </h1>
-            <p className="font-[source sans 3] font-semibold text-md">
+            <h1 className="font-[lato] font-bold text-xl">No Input found</h1>
+            <p className="font-[lato] font-semibold text-md">
               Provide Input in the above fields to visualize
             </p>
           </div>
@@ -158,9 +156,11 @@ const DoubleEvaluator = (x) => {
                 response={x.response}
                 tickers={x.selectedTickers}
                 conditions={x.selectedCondition.map(
-                  value => `condition_${x.fixedCondition}_${value.label}`
+                  (value) => `condition_${x.fixedCondition}_${value.label}`
                 )}
-                conditionListNumbers={x.selectedCondition.map(value => value.label)}
+                conditionListNumbers={x.selectedCondition.map(
+                  (value) => value.label
+                )}
                 fixedConditions={[x.fixedCondition]}
               />
             )}

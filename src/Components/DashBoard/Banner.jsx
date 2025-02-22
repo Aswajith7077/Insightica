@@ -16,12 +16,12 @@ const slogan =
 
 const Banner = () => {
   return (
-    <div className="flex flex-row py-[4%] pt-[25%] md:pt-[15%] lg:pt-[10%] text-white px-[10%] bg-[#182433] z-20" id="banner">
-      <div className="mt-[2%] lg:w-1/2">
+    <div className="flex justify-between flex-row py-[4%]  lg:pt-[3%] text-white px-[10%] bg-[#182433] z-20" id="banner">
+      <div className="mt-[3%] lg:w-1/2">
         <h1 className="font-[montserrat] leading-normal text-center lg:text-left font-semibold text-4xl  mb-10">
           {title}
         </h1>
-        <p className="font-[lato] font-semibold text-md">{slogan}</p>
+        <p className="text-center lg:text-left font-[lato] font-semibold text-md">{slogan}</p>
         <div className="flex flex-row gap-5 justify-center lg:justify-start">
           <Link to="tools" smooth={true}>
             <motion.button
@@ -43,8 +43,10 @@ const Banner = () => {
           </Lk>
         </div>
       </div>
-      <div className="w-1/2 hidden lg:flex">
-        <World data={sampleArcs} globeConfig={globeConfig} className="h-10" />
+      <div className={'hidden lg:flex flex-row justify-center w-1/2 items-center'}>
+        <div className="flex flex-row h-full w-[60%] items-center ">
+          <World data={sampleArcs} globeConfig={globeConfig} className="h-10 w-10" />
+        </div>
       </div>
     </div>
   );

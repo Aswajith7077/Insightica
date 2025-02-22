@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { FaCircle } from "react-icons/fa6";
 import { Drawer } from "antd";
 import { TopSection } from "@/constants/Tutorials";
-import { SingleEvalHelp, DoubleEvalHelp,TripleEvalHelp } from "@/constants/ToolsHelp";
+import {
+  SingleEvalHelp,
+  DoubleEvalHelp,
+  TripleEvalHelp,
+} from "@/constants/ToolsHelp";
 import { Link } from "react-scroll";
 import { motion } from "framer-motion";
 
 const tools = [
   "Condition Evaluator",
   "Pair Performance Analyzer",
-  "Triad Insights"
+  "Triad Insights",
 ];
 
 const TopSectionRenderer = () => {
@@ -21,7 +26,7 @@ const TopSectionRenderer = () => {
         Guide to Get Started
       </h2>
       <div className="flex flex-col">
-        {TopSection.GetStarted.map((value,key) => {
+        {TopSection.GetStarted.map((value, key) => {
           return (
             <div key={key}>
               <h3 className="font-semibold font-[lato] text-xl">
@@ -32,9 +37,17 @@ const TopSectionRenderer = () => {
                   {value.description}
                 </p>
               )}
-              <ul className="flex flex-col gap-5 my-10">
+              <ul className="flex flex-col gap-5 my-10 mx-5">
                 {value.points.map((val, k) => {
-                  return <li key={k} className="mx-[10%] font-[lato] font-semibold text-lg text-gray-500">{val}</li>;
+                  return (
+                    <li
+                      key={k}
+                      className="flex flex-row font-[lato] font-semibold text-lg text-gray-500"
+                    >
+                      <FaCircle className={"my-2 mx-3"} size={12} />
+                      {val}
+                    </li>
+                  );
                 })}
               </ul>
             </div>
@@ -42,31 +55,35 @@ const TopSectionRenderer = () => {
         })}
       </div>
       <ul>
-        {TopSection.QuickLinks.map((value,key)=>{
-          console.log('Link : ',value.link);
-          return <li>
-            <Link to={value.link} key={key} smooth={true  }>
-              <motion.button whileTap={{scale:0.95,transition:{duration:0.2}}} whileHover={{y:-5,transition:{duration:0.2}}} className="font-[lato] font-semibold text-blue-500 text-lg my-3">
-                {value.title}
-              </motion.button>
-            </Link>
-          </li>
+        {TopSection.QuickLinks.map((value, key) => {
+          console.log("Link : ", value.link);
+          return (
+            <li>
+              <Link to={value.link} key={key} smooth={true}>
+                <motion.button
+                  whileTap={{ scale: 0.95, transition: { duration: 0.2 } }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  className="font-[lato] font-semibold text-blue-500 text-lg my-3"
+                >
+                  {value.title}
+                </motion.button>
+              </Link>
+            </li>
+          );
         })}
       </ul>
-      
-
     </div>
   );
 };
 
-const ToolsTutorials = ({ drawerContent, selectedTool,id }) => {
-  console.log('Id : ',id)
+const ToolsTutorials = ({ drawerContent, selectedTool, id }) => {
+  console.log("Id : ", id);
   return (
     <div className="flex flex-col w-full items-center" id={id}>
       <h1 className="font-[lato] font-semibold text-4xl my-10 mx-5">
         {tools[selectedTool]}
       </h1>
-      <h2 className="font-[source sans 3] mx-5 mt-10 font-semibold text-2xl">
+      <h2 className="font-[lato] mx-5 mt-10 font-semibold text-2xl">
         {"What It Does"}
       </h2>
       <ul className="flex flex-col w-[35rem] mt-5 mb-9 mx-[10%] gap-5">
@@ -76,23 +93,23 @@ const ToolsTutorials = ({ drawerContent, selectedTool,id }) => {
           </li>
         ))}
       </ul>
-      <h2 className="font-[source sans 3] mx-5 mt-10 font-semibold text-2xl">
+      <h2 className="font-[lato] mx-5 mt-10 font-semibold text-2xl">
         {"How to Use"}
       </h2>
       <ul className="flex flex-col w-[38rem] my-9 mx-5 gap-5">
         {drawerContent.howToUse.map((value, key) => (
           <div key={key} className="flex flex-row ">
-            <p className="font-[lato] font-bold text-lg w-1/5">{`Step ${key + 1}:`}</p>
+            <p className="font-[lato] font-bold text-lg w-[15%]">{`Step ${key + 1}:`}</p>
             <li
               key={key}
-              className=" w-4/5 text-gray-600 text-justify font-[lato] font-semibold text-lg"
+              className=" w-[85%] text-gray-600 text-justify font-[lato] font-semibold text-lg"
             >
               {value}
             </li>
           </div>
         ))}
       </ul>
-      <h2 className="font-[source sans 3] mx-5 mt-10 font-semibold text-2xl">
+      <h2 className="font-[lato] mx-5 mt-10 font-semibold text-2xl">
         {"Key Visualizations"}
       </h2>
       <ul className="flex flex-col w-[40rem] my-5 items-center  gap-10">
@@ -104,8 +121,9 @@ const ToolsTutorials = ({ drawerContent, selectedTool,id }) => {
                 return (
                   <li
                     key={k}
-                    className=" w-full text-gray-600 text-justify font-[lato] font-semibold text-lg"
+                    className="flex flex-row w-full text-gray-600 text-justify font-[lato] font-semibold text-lg"
                   >
+                    <FaCircle className={"my-2 mx-3"} size={12} />
                     {val}
                   </li>
                 );

@@ -5,47 +5,14 @@ import Select from "react-select";
 import { metricsMemo } from "@/constants/index.js";
 
 import ApexSankey from "apexsankey";
-// import Sample from '@/components/charts/temp';
+import {Slider} from "@mui/material";
 
-// import ChordDiagram from 'react-chord-diagram';
 
-// const data_ = {
-//   nodes: [
-//     { id: "England", title: "england" },
-//     { id: "Wales", title: "wales" },
-//     { id: "Level 4", title: "level 4" },
-//     { id: "Level 3", title: "level 3" },
-//     { id: "Level 2", title: "level 2" },
-//     { id: "Level 1 and entry level", title: "level 1 and entry level" },
-//     { id: "No qualifications", title: "no qualifications" },
-//     { id: "Other", title: "other" },
-//     { id: "Wholesale & retail", title: "wholesale & retail" },
-//     { id: "Health & social work", title: "health & social work" },
-//     { id: "Education", title: "education" },
-//     { id: "Construction", title: "construction" },
-//     { id: "Manufacturing", title: "manufacturing" },
-//     { id: "Transport & storage", title: "transport & storage" },
-//     { id: "Finance & insurance", title: "finance & insurance" }
-//   ],
-//   edges: [
-//     { source: "England", target: "Level 4", value: 13 },
-//     { source: "England", target: "Level 3", value: 8 },
-//     { source: "England", target: "Level 2", value: 8 },
-//     { source: "England", target: "Level 1 and entry level", value: 6 },
-//     { source: "England", target: "No qualifications", value: 3 },
-//     // { source: 'England', target: 'Other', value: 4 },
-//     { source: "Wales", target: "Level 4", value: 7 },
-//     { source: "Wales", target: "Level 3", value: 8 },
-//     { source: "Wales", target: "Level 2", value: 4 },
-//     { source: "Wales", target: "Level 1 and entry level", value: 5 },
-//     { source: "Wales", target: "No qualifications", value: 5 }
-//   ]
-// };
 const graphOptions = {
   nodeWidth: 20,
   fontFamily: "Quicksand, sans-serif",
   fontWeight: "600",
-  edgeOpacity: 0.2
+  edgeOpacity: 0.2,
 };
 
 const handleData = (
@@ -62,7 +29,7 @@ const handleData = (
 
   const nodes = [...fixedConditions, ...conditionListNumbers].map((value) => ({
     id: `condition_${value}`,
-    title: `condition_${value}`
+    title: `condition_${value}`,
   }));
   const regex =
     fixedConditions.length <= 1
@@ -74,20 +41,16 @@ const handleData = (
     const edgeWeight = response[hiskey][value][stock][metricsMemo[metric]];
     const result = value.match(regex);
     if (result) {
-      // console.log(
-      //   parseInt(result[1], 10),
-      //   fixedConditions,
-      //   fixedConditions.includes(parseInt(result[1], 10))
-      // );
+
       if (fixedConditions.length === 1) {
         const src = "condition_" + result[1];
         // if (fixedConditions.includes(parseInt(result[1], 10))) {
-          const dest = "condition_" + result[2];
-          edges.push({
-            source: src,
-            target: dest,
-            value: edgeWeight !== 0 ? edgeWeight : -0.01
-          });
+        const dest = "condition_" + result[2];
+        edges.push({
+          source: src,
+          target: dest,
+          value: edgeWeight !== 0 ? edgeWeight : -0.01,
+        });
         // }
       } else if (fixedConditions.length === 2) {
         const src = "condition_" + result[1];
@@ -98,17 +61,17 @@ const handleData = (
           edges.push({
             source: src,
             target: dest,
-            value: edgeWeight !== 0 ? edgeWeight : -0.01
+            value: edgeWeight !== 0 ? edgeWeight : -0.01,
           });
           edges.push({
             source: src,
             target: via,
-            value: edgeWeight !== 0 ? edgeWeight : -0.01
+            value: edgeWeight !== 0 ? edgeWeight : -0.01,
           });
           edges.push({
             source: via,
             target: dest,
-            value: edgeWeight !== 0 ? edgeWeight : -0.01
+            value: edgeWeight !== 0 ? edgeWeight : -0.01,
           });
         }
       }
@@ -117,7 +80,7 @@ const handleData = (
 
   setData({
     nodes: nodes,
-    edges: edges
+    edges: edges,
   });
   console.log(data);
 };
@@ -128,7 +91,7 @@ const CorrelationArc = ({
   response,
   conditions,
   conditionListNumbers,
-  fixedConditions
+  fixedConditions,
 }) => {
   const [selectedHistory, setSelectedHistory] = useState(1);
   const [selectedMetric, setMetric] = useState(metrics[0]);
@@ -174,17 +137,12 @@ const CorrelationArc = ({
   useEffect(() => {
     document.getElementById("diagram").innerHTML = "";
     if (data === null || data === undefined) return;
-    // console.log(
-    //   document.getElementById("diagram").style.width - 10,
-    //   document.getElementById("diagram").style.height
-    // );
+
     const options = {
       width: screenWidth - 1000,
-      // height: screenHeight - 1000,
-      ...graphOptions
+      ...graphOptions,
     };
-    // console.log('Render Data : ',data)
-    // console.log('Original Data : ',data_)
+
     const s = new ApexSankey(document.getElementById("diagram"), options);
     s.render(data);
   }, [data]);
@@ -193,18 +151,19 @@ const CorrelationArc = ({
     <div className="flex flex-col">
       <div className="mx-[5%]">
         <div className="flex flex-col md:flex-row gap-5 my-10">
-          <input
-            type="number"
-            min={1}
-            value={selectedHistory}
-            max={history - 1 ? history - 1 : history}
-            onChange={(e) => {
-              setSelectedHistory(
-                e.target.value !== undefined ? e.target.value : selectedHistory
-              );
-            }}
-            className="w-full border-2 border-[#dce1e7] rounded-lg outline-none px-3 py-1 font-[lato] font-semibold"
+          <div className={'flex flex-col w-full gap-5'}>
+            <h2 className={'font-[lato] font-semibold text-lg '}>History</h2>
+            <Slider
+                value={selectedHistory}
+                onChange={(e, val) =>
+                  setSelectedHistory(val ? val : selectedHistory)
+              }
+              valueLabelDisplay="auto"
+              min={1}
+              max={history - 1 ? history - 1 : history}
           />
+          </div>
+          <div className={'flex w-full flex-col gap-5'}><h2 className={'font-[lato] font-semibold text-lg '}>Metrics</h2>
           <Select
             options={metrics.map((val) => ({ label: val, value: val }))}
             defaultValue={metrics[0]}
@@ -213,8 +172,9 @@ const CorrelationArc = ({
                 value !== undefined ? metricsMemo[value.label] : selectedMetric
               );
             }}
-            className="w-full bg-white font-[source sans 3] font-semibold text-md"
+            className="w-full bg-white font-[lato] font-semibold text-md"
           />
+          </div>
         </div>
       </div>
       <div

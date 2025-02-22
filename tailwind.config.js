@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-
 export default {
   content: [
     "./index.html",
@@ -13,19 +12,11 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-      FontFamily:{
-        'lato':[
-          'Lato'
-        ],
-        'montserrat':[
-          'Monserrat'
-        ],
-        'source sans 3':[
-          'Source Sans 3'
-        ],
-        'open sans':[
-          'Open Sans'
-        ]
+      FontFamily: {
+        lato: ["Lato"],
+        montserrat: ["Monserrat"],
+        lato: ["lato"],
+        "open sans": ["Open Sans"],
       },
       boxShadow: {
         input:

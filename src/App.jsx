@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { useState } from "react";
+import React, { useState } from "react";
 import { AuthProvider } from "@/auth/AuthContext";
 
 import Documentation from "@/components/dashboard/Documentation";
@@ -14,8 +14,13 @@ import Error from "@/components/dashboard/Error";
 import ResetPassword from "@/components/ResetPassword";
 import Support from "@/components/dashboard/Support";
 import { ResetProvider } from "@/auth/ResetContext";
+import TradingEssentials from "@/components/tradingessentials/TradingEssentials.jsx";
+import AboutUs from "@/components/AboutUs.jsx";
 
 function App() {
+
+
+  const [navState,setNavState] = useState(-1);
   // const [accessToken, setAccessToken] = useState("");
   // const [responseToken, setRefreshToken] = useState("");
   // const [isLogged, setIsLogged] = useState(undefined);
@@ -28,7 +33,7 @@ function App() {
             path="/docs"
             element={
               <div>
-                <NavBar />
+                <NavBar navState={navState} setNavState={setNavState} />
                 <Documentation />
               </div>
             }
@@ -37,10 +42,7 @@ function App() {
             exact
             path="/dashboard"
             element={
-              <div>
-                <NavBar />
-                <Dashboard />
-              </div>
+                <Dashboard setNavState={setNavState}/>
             }
           />
           <Route
@@ -48,7 +50,11 @@ function App() {
             path="/tools"
             element={
               <div>
-                <NavBar isSticky={false} />
+                <NavBar
+                  isSticky={false}
+                  navState={navState}
+                  setNavState={setNavState}
+                />
                 <Tools />
                 <Footer />
               </div>
@@ -66,16 +72,31 @@ function App() {
               </ResetProvider>
             }
           />
-          <Route exact path="/support" element={<Support />} />
+          <Route
+            exact
+            path="/support"
+            element={
+              <div className="flex flex-col">
+                <NavBar navState={navState} setNavState={setNavState} />
+                <Support />
+                <Footer />
+              </div>
+            }
+          />
+            <Route exact path={'/tradingessentials'} element={
+                <TradingEssentials/>
+            } />
+            <Route exact path="/about" element={<AboutUs />}/>
           <Route
             path="*"
             element={
               <div>
-                <NavBar />
+                <NavBar navState={navState} setNavState={setNavState} />
                 <Error />
               </div>
             }
           />
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

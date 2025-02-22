@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { menuLinks, navLinks } from "@/constants";
+import React, { useState, useEffect, useRef } from "react";
+import { AppName, menuLinks, navLinks } from "@/constants";
 import { Link as Lk } from "react-router-dom";
 import { api } from "@/api/api";
 
@@ -12,7 +12,6 @@ import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
-
 const formatName = (name) => {
   let names = name.split(" ");
   let result = "";
@@ -26,17 +25,17 @@ const formatName = (name) => {
 const userMenuItems = [
   {
     title: "Edit Profile",
-    icon: <FaUserEdit size={20} />
+    icon: <FaUserEdit size={20} />,
   },
   {
     title: "Appearance",
-    icon: <FaPaintBrush size={20} />
-  }
+    icon: <FaPaintBrush size={20} />,
+  },
 ];
 
 const handleSignOut = async (auth) => {
   try {
-    const response = await api.post("/api/user/signout/");
+    const response = await api.post(import.meta.env.VITE_BASE_SIGNOUT_URL);
     auth.setUser(undefined);
     localStorage.removeItem(import.meta.env.VITE_BASE_LOCAL_STORAGE_ACCESS_KEY);
     localStorage.removeItem(
@@ -49,24 +48,39 @@ const handleSignOut = async (auth) => {
   }
 };
 
-const NavBar = ({isSticky = true}) => {
+const NavBar = ({ navState, setNavState, isSticky = true }) => {
   const navigate = useNavigate();
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [signInMenu, setSignInMenu] = useState(false);
   const auth = useAuth();
+
 
   const handleNavigation = (route, id) => {
     console.log(route, id);
     navigate(route, { state: { sectionId: id } });
   };
 
-  // console.log(auth);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpened(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setIsMenuOpened]);
 
   return (
     <navbar
-      className={`navbar ${isSticky ? "fixed" : ""} flex flex-row items-center justify-between w-full px-10 py-5 text-white bg-[#182433] z-50`}
+      className={`navbar flex flex-row items-center justify-between drop-shadow-xl w-full px-10 py-5 text-white bg-[#182433] `}
     >
-      <h1 className="font-[lato] font-semibold text-3xl">Insightica</h1>
+      <h1 className="font-[lato] font-semibold text-3xl">{AppName}</h1>
       <div
         className={` justify-self-center ${!auth.user ? "translate-x-20" : ""} top-[30px] flex flex-row font-[lato] gap-10 font-semibold text-lg items-center justify-center`}
       >
@@ -77,7 +91,7 @@ const NavBar = ({isSticky = true}) => {
               onClick={() => {
                 handleNavigation(value.route, value.link);
               }}
-              className="hidden lg:block text-center lg:text-lg font-semibold cursor-pointer hover:text-white text-gray-400"
+              className={`hidden lg:block text-center lg:text-lg font-semibold cursor-pointer hover:text-white ${navState === key ? "text-white" : "text-gray-400"}`}
             >
               {value.title}
             </motion.button>
@@ -85,14 +99,17 @@ const NavBar = ({isSticky = true}) => {
         })}
       </div>
 
+
+
       <div className="flex flex-row gap-5 items-center font-semibold font-[lato]">
         {/* <div className="flex flex-col justify-right"> */}
         <motion.button
           onClick={() => {
+            // e.stopPropagation();
             if (signInMenu) setSignInMenu(false);
-            setIsMenuOpened(!isMenuOpened);
+            if (!isMenuOpened) setIsMenuOpened(true);
           }}
-          whileHover={{ backgroundColor: "#FFFFFF44" }}
+          whileHover={{ backgroundColor: "#FFFFFF44",transition:{duration:0.5} }}
           className="flex p-3 rounded-xl"
         >
           <IoMenu size={28} />
@@ -100,7 +117,8 @@ const NavBar = ({isSticky = true}) => {
 
         {isMenuOpened && (
           <div
-            className={`flex flex-col ${isSticky ? "top-[90%]" : "top-20"} ${auth.user === undefined ? "right-[270px]" : "right-[100px]"} absolute rounded-2xl border bg-white text-black p-5  gap-5 z-50`}
+            ref={menuRef}
+            className={`flex flex-col top-20 ${auth.user === undefined ? "right-[150px]" : "right-[200px]"} absolute rounded-2xl border bg-white text-black p-5  gap-5 z-50`}
           >
             {menuLinks.map((value, key) => {
               return (
@@ -118,7 +136,7 @@ const NavBar = ({isSticky = true}) => {
           </div>
         )}
 
-        {auth.user === undefined && (
+        {/* {auth.user === undefined && (
           <Lk to="/login">
             <motion.button
               whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
@@ -128,12 +146,15 @@ const NavBar = ({isSticky = true}) => {
               Login
             </motion.button>
           </Lk>
-        )}
+        )} */}
         {auth.user === undefined && (
           <Lk to="/signin">
             <motion.button
               whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               whileTap={{ scale: 0.96, transition: { duration: 0.2 } }}
+              onClick={() => {
+                setNavState(-1);
+              }}
               className="px-5 py-3 w-[6rem] border rounded-2xl"
             >
               Sign In
@@ -141,32 +162,42 @@ const NavBar = ({isSticky = true}) => {
           </Lk>
         )}
         {auth.user !== undefined && (
-          // <div className="items-center">
+
           <motion.div
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-            whileTap={{ scale: 0.95, transition: { duration: 0.2 } }}
-            className="cursor-pointer"
+            whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+            whileTap={{ scale: 0.97, transition: { duration: 0.2 } }}
+            className="flex flex-row cursor-pointer items-center"
+            onClick={() => {
+              if (isMenuOpened) setIsMenuOpened(false);
+              setSignInMenu((prev) => !prev);
+            }}
           >
-            <FaUserCircle
-              size={44}
-              onClick={() => {
-                if (isMenuOpened) setIsMenuOpened(false);
-                setSignInMenu((prev) => !prev);
-              }}
-            />
+            <FaUserCircle size={44} />
+            <div className={"mx-3"}>
+              <h1
+                className={"hidden md:block font-[lato] font-semibold text-lg"}
+              >
+                {auth.user.name}
+              </h1>
+              <p className="font-[lato] font-bold text-gray-400 text-xs">
+                Basic Plan
+              </p>
+            </div>
           </motion.div>
         )}
+
+
         {auth.user && signInMenu && (
           <div
-            className={`flex flex-col ${isSticky ? "top-[90%]" : "top-20"} p-5 absolute items-center bg-white border right-[40px] top-[90%] text-black rounded-2xl z-50`}
+            className={`flex flex-col top-20 ${auth.user === undefined ? "right-[270px]" : "right-10"} p-5 absolute items-center bg-white border  text-black rounded-2xl z-[9999]`}
           >
             <h1 className="font-[lato] font-semibold text-2xl">
               {auth.user.name}
             </h1>
-            <h2 className="font-[source sans 3] font-semibold text-md text-gray-500">
+            <h2 className="font-[lato] font-semibold text-md text-gray-500">
               {auth.user.email}
             </h2>
-            <ul className="my-10 flex flex-col font-[source sans 3] gap-3 text-md">
+            <ul className="my-10 flex flex-col font-[lato] gap-3 text-md">
               {userMenuItems.map((value, key) => {
                 return (
                   <motion.li

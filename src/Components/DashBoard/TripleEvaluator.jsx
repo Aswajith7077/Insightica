@@ -6,14 +6,13 @@ import BarChartStock from "@/components/charts/BarChartStock";
 import Radar from "@/components/charts/RadarChart";
 import { Tooltip } from "react-tooltip";
 
-
 import { FaCircleInfo } from "react-icons/fa6";
 
 import {
   performanceMatrix,
   metricWheel,
   trendCharts,
-  correlationArc
+  correlationArc,
 } from "@/constants/ToolTip";
 import CorrelationArc from "../charts/CorrelationArc";
 
@@ -22,20 +21,20 @@ const options = [
   "Metric Wheel",
   "Trend Chart(Stock Fixed)",
   "Trend Chart(Time Fixed)",
-  "Correlation Arc"
+  "Correlation Arc",
 ];
 
 const toolTipTexts = [
   performanceMatrix,
   metricWheel,
   trendCharts,
-  correlationArc
+  correlationArc,
 ];
 
 const Options = ({ option, className = "", onClick, toolTipText }) => {
   return (
     <motion.button
-      className={`flex flex-wrap items-center py-3 px-5 gap-2 mt-2 mb-1 rounded-2xl font-[lato] font-semibold text-md ${className}`}
+      className={`flex flex-wrap items-center py-3 px-5 gap-2 mt-2 mb-1 rounded-lg font-[lato] font-semibold text-md ${className}`}
       whileHover={{ scale: 1.04, transition: { duration: 0.2 } }}
       whileTap={{ scale: 0.99, transition: { duration: 0.2 } }}
       onClick={onClick}
@@ -55,7 +54,7 @@ const TripleEvaluator = ({
   selectedCondition,
   selectedTickers,
   fixedCondition1,
-  fixedCondition2
+  fixedCondition2,
 }) => {
   const [currentTool, setCurrentTool] = useState(0);
 
@@ -73,20 +72,18 @@ const TripleEvaluator = ({
             <Options
               key={key}
               option={value}
-              className={`${currentTool == key ? "bg-white text-black" : ""}`}
+              className={`${currentTool == key ? "bg-white text-black" : "border-2"}`}
               onClick={() => setCurrentTool(key)}
               toolTipText={toolTipTexts[key]}
             />
           );
         })}
       </div>
-      <div className="flex flex-col w-full h-full rounded-[30px] bg-[#f6f8fb]">
+      <div className="flex flex-col w-full h-full rounded-xl bg-[#f6f8fb]">
         {!response && (
           <div className="flex flex-col h-full items-center justify-center">
-            <h1 className="font-[source sans 3] font-bold text-xl">
-              No Input found
-            </h1>
-            <p className="font-[source sans 3] font-semibold text-md">
+            <h1 className="font-[lato] font-bold text-xl">No Input found</h1>
+            <p className="font-[lato] font-semibold text-md">
               Provide Input in the above fields to visualize
             </p>
           </div>
@@ -151,7 +148,7 @@ const TripleEvaluator = ({
                 conditionListNumbers={selectedCondition.map(
                   (value) => value.label
                 )}
-                fixedConditions={[fixedCondition1,fixedCondition2]}
+                fixedConditions={[fixedCondition1, fixedCondition2]}
               />
             )}
           </div>

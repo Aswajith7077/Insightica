@@ -4,86 +4,34 @@
 
 
 
-
+const footerAboutUs = `Insightica: Your trusted partner in data-driven trading analytics. Simplify strategies, decode trends, and trade smarter.`
 const footerLinks = {
-  company: [
+  "Quick Links": [
     {
-      title: "Support",
+      title: "Home",
       link: "#"
     },
     {
-      title: "About",
+      title: "Products",
       link: "#"
     },
     {
-      title: "Blog",
+      title: "FAQs & Support",
       link: "#"
     },
     {
-      title: "Press",
-      link: "#"
+      title: "About Us",
+      link: "/about"
     },
-    {
-      title: "Careers",
-      link: "#"
-    }
   ],
-  products: [
+  "Call To Action":[
     {
-      title: "Insightica",
-      link: "#"
+      title: "Login",
+      link: "/login"
     },
     {
-      title: "Stocks",
-      link: "#"
-    },
-    {
-      title: "Credit",
-      link: "#"
-    }
-  ],
-  offerings: [
-    {
-      title: "Publisher",
-      link: "#"
-    },
-    {
-      title: "Gateway",
-      link: "#"
-    },
-    {
-      title: "Brokers",
-      link: "#"
-    },
-    {
-      title: "TickerTape",
-      link: "#"
-    },
-    {
-      title: "Ecosystem",
-      link: "#"
-    }
-  ],
-  "fine Print": [
-    {
-      title: "Disclosures",
-      link: "#"
-    },
-    {
-      title: "Terms & Conditions",
-      link: "#"
-    },
-    {
-      title: "Privacy Policy",
-      link: "#"
-    },
-    {
-      title: "Investment Tools",
-      link: "#"
-    },
-    {
-      title: "Additional Disclosures",
-      link: "#"
+      title: "Signup",
+      link: "/signin"
     }
   ]
 };
@@ -174,6 +122,7 @@ const footerItems = [
 
 
 export{
+  footerAboutUs,
     footerItems,
     footerLinks,
     footer_links,

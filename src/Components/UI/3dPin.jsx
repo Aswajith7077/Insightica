@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "./../../lib/utils.js";
+import { cn } from "@/lib/utils.js";
 import { Link } from "react-router-dom";
 
 export const PinContainer = ({

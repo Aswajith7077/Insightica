@@ -19,15 +19,20 @@ const handleDelete = (setResult, value, setTarget) => {
   // console.log('Result delete : ',result.delete(value));
   setResult((prev) => {
     const updated = new Set(prev);
+    console.log(updated);
     updated.delete(value);
+    console.log(updated);
+    // console.log()
     return updated;
   });
   setTarget((prev) => {
     const updated = new Set(prev);
     updated.add(value);
-    return updated;
+
+    return [...updated];
   });
 };
+
 const StockSelect = (x) => {
   // let props = this.props;
   const original = x.tickers.map((value) => value.label);
@@ -39,13 +44,17 @@ const StockSelect = (x) => {
     x.setTickers(Array.from(result));
   }, [result]);
 
+  useEffect(() => {
+    console.log("Target", target);
+  }, [target]);
+
   return (
     <div>
       <input
         type="text"
         onChange={(e) => search(e.target.value, setTarget, original, result)}
         className={
-          "w-full border-2 px-3 py-3 rounded-xl font-[source sans 3] font-medium outline-none"
+          "w-full border-2 px-3 py-3 rounded-lg font-[lato] font-medium outline-none"
         }
       />
       <div className={"flex flex-wrap gap-2 my-5"}>
@@ -65,7 +74,7 @@ const StockSelect = (x) => {
                 console.log("During Exclusion of data", Array.from(result));
               }}
             >
-              <h1 className={"font-[source sans 3] text-sm font-semibold font"}>
+              <h1 className={"font-[lato] text-sm font-semibold font"}>
                 {value}
               </h1>
               <IoClose />
@@ -74,7 +83,9 @@ const StockSelect = (x) => {
         })}
       </div>
       <div
-        className={"overflow-y-auto h-[22rem] my-3 border py-3 px-5 rounded-xl"}
+        className={
+          "overflow-y-auto h-[22rem] my-3 border py-3 px-5 rounded-lg bg-white"
+        }
       >
         {target.length !== 0 &&
           target &&
@@ -84,7 +95,7 @@ const StockSelect = (x) => {
                 whileHover={{
                   y: -5,
                   color: "#000000",
-                  transition: { duration: 0.2 }
+                  transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.96, transition: { duration: 0.2 } }}
                 key={key}
@@ -113,11 +124,7 @@ const StockSelect = (x) => {
             );
           })}
         {!target.length && (
-          <h1
-            className={
-              "font-[source sans 3] font-semibold text-lg text-gray-500"
-            }
-          >
+          <h1 className={"font-[lato] font-semibold text-lg text-gray-500"}>
             No Results found
           </h1>
         )}

@@ -23,14 +23,17 @@ const leftColumnFAQ = [
       "Create an account, log in to your dashboard, and start analyzing with our tools. You’ll have instant access to the Single, Double, and Triple Evaluators."
     ],
     link: null
-  },
+  }
+];
+
+const middleColumnFAQ = [
   {
     title: "Are there additional basic utility tools on the platform?",
     content: [
       "Yes, Insightica offers essential utilities like the ROI Calculator, SIP Calculator, and Brokerage Calculator to simplify your trading-related calculations."
     ],
     link: {
-      title: "Explore Utility Tools",
+      title: "Explore Utility tools",
       linkTo: "/tradingessentials"
     }
   },
@@ -40,10 +43,7 @@ const leftColumnFAQ = [
       "Insightica combines professional-grade visuals, intuitive analytics, and a user-friendly interface. Features like heatmaps, radial graphs, and chord diagrams empower you to make data-driven decisions effortlessly."
     ],
     link: null
-  }
-];
-
-const rightColumnFAQ = [
+  },
   {
     title: "How does the Single Evaluator work?",
     content: [
@@ -63,11 +63,14 @@ const rightColumnFAQ = [
       title: "Learn More about Double Evaluator",
       link: ""
     }
-  },
+  }
+];
+
+const rightColumnFAQ = [
   {
     title: "How is the Triple Evaluator different from the others?",
     content: [
-      "The Triple Evaluator takes analysis to the next level, enabling you to evaluate triplets of conditions for advanced multi-variable strategies. Tools like triplet chord diagrams and advanced heatmaps are designed for deep insights."
+      "The Triple Evaluator takes analysis to the next level, enabling you to evaluate triplets of conditions for advanced multi-variable strategies. tools like triplet chord diagrams and advanced heatmaps are designed for deep insights."
     ],
     link: {
       title: "Learn More about Triple Evaluator",
@@ -83,7 +86,7 @@ const rightColumnFAQ = [
       "Triple Evaluator: Extends to triplet chord diagrams and advanced heatmaps."
     ],
     link: {
-      title: "Explore Utility Tools",
+      title: "Explore Utility tools",
       linkTo: "/tradingessentials"
     }
   },
@@ -98,13 +101,15 @@ const rightColumnFAQ = [
 
 const FAQ = ({ className, id }) => {
   return (
-    <div className={className} id={id}>
-      <h1 className="font-[montserrat] font-semibold text-4xl text-center">
+    <div className={` ${className} `} id={id}>
+      <h1 className="font-[montserrat] font-semibold text-xl md:text-4xl text-center">
         Frequently Asked Questions
       </h1>
-      <div className="flex flex-row justify-center my-10 text-lg">
-        <p className="font-[montserrat]  text-lg">Have more questions? Visit Our</p>
-        <button className="mx-1 font-[montserrat] text-lg text-blue-700 hover:text-blue-500 font-semibold hover:cursor-pointer">
+      <div className="flex flex-row md:w-full justify-center mt-5 mb-10 text-md md:text-lg">
+        <p className="font-[montserrat] text-sm md:text-lg">
+          Have more questions? Visit Our
+        </p>
+        <button className="mx-2 font-[montserrat] text-md md:text-lg text-blue-700 hover:text-blue-500 font-semibold hover:cursor-pointer">
           Get Help
         </button>
       </div>
@@ -112,27 +117,16 @@ const FAQ = ({ className, id }) => {
         <motion.div className="flex flex-col my-5 w-full">
           {leftColumnFAQ.map((value, key) => (
             <Accordion key={key} value={value} />
-            // <div className="my-3 bg-white border p-10  rounded-3xl">
-            //   <h1 className="text-lg font-[lato] font-semibold">
-            //     {value.title}
-            //   </h1>
-            //   <p className="font-[source sans 3] font-medium text-gray-600 my-3">
-            //     {value.content}
-            //   </p>
-            // </div>
+          ))}
+        </motion.div>
+        <motion.div className="flex flex-col my-5 w-full">
+          {middleColumnFAQ.map((value, key) => (
+            <Accordion key={key} value={value} />
           ))}
         </motion.div>
         <div className="flex flex-col my-5 w-full">
           {rightColumnFAQ.map((value, key) => (
             <Accordion key={key} value={value} />
-            // <div className="my-3 bg-white border p-10  rounded-3xl">
-            //   <h1 className="text-lg font-[lato] font-semibold">
-            //     {value.title}
-            //   </h1>
-            //   <p className="font-[source sans 3] font-medium text-gray-600 my-3">
-            //     {value.content}
-            //   </p>
-            // </div>
           ))}
         </div>
       </div>

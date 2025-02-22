@@ -4,17 +4,23 @@ import { useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
 import axios from "axios";
-import { deserializeUser, encrypt, serializeUser } from "@/components/tools/Cryptography";
+import {
+  deserializeUser,
+  encrypt,
+  serializeUser,
+} from "@/components/tools/Cryptography";
 import { useToast } from "@/hooks/use-toast.js";
 import { Toaster } from "@/components/ui/toaster.jsx";
 
 import { MdEmail } from "react-icons/md";
 import { IoMdLock } from "react-icons/io";
 import { useAuth } from "@/auth/AuthContext";
+import Config from "/config/config";
+import { AppName } from "@/constants/index.js";
 
 const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
   return (
-    <div className="flex flex-col bg-[#f6f8fb]  p-4 justify-center border w-full lg:w-1/2 h-full outline-none  py-[5%]">
+    <div className="flex flex-col bg-[#f6f8fb] rounded-r-2xl p-4 justify-center border w-full lg:w-1/2 h-full outline-none  py-[5%]">
       {/* <Link to="/landingpage">
           <motion.button
             whileTap={{ scale: 0.93, transitionDuration: 0.2 }}
@@ -38,7 +44,7 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
           animate={{
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5, delay: 0.25 }
+            transition: { duration: 0.5, delay: 0.25 },
           }}
           className="font-[lato] text-lg font-semibold mb-[10%] w-[100%] text-center"
         >
@@ -50,9 +56,9 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
           animate={{
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5, delay: 0.5 }
+            transition: { duration: 0.5, delay: 0.5 },
           }}
-          className="flex flex-row items-center gap-6 w-[550] h-[50px] text-md font-semibold my-3 dark:text-white bg-white border rounded-[15px] dark:bg-[#222226] active:border-1 active:border-gray px-5 font-[source sans 3] outline-none"
+          className="flex flex-row items-center gap-6 w-[550] h-[50px] text-md font-semibold my-3 dark:text-white bg-white border rounded-[15px] dark:bg-[#222226] active:border-1 active:border-gray px-5 font-[lato] outline-none"
         >
           <MdEmail size={18} className="text-gray-500" />
           <input
@@ -63,7 +69,7 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
             }}
             value={email}
             placeholder="Email"
-            className="w-full outline-none h-full"
+            className="w-full font-[lato] font-semibold outline-none h-full"
           />
         </motion.div>
         {/* <p className="font-[lato] font-semibold text-md">Password</p> */}
@@ -72,9 +78,9 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
           animate={{
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5, delay: 0.75 }
+            transition: { duration: 0.5, delay: 0.75 },
           }}
-          className="flex flex-row items-center gap-6 w-[550] h-[50px] my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-5 font-[source sans 3] "
+          className="flex flex-row items-center gap-6 w-[550] h-[50px] my-3 text-md font-semibold  dark:text-white bg-white border dark:bg-[#222226] rounded-[15px] px-5 font-[lato] "
         >
           <IoMdLock size={18} className="text-gray-500" />
           <input
@@ -93,11 +99,11 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
             animate={{
               y: 0,
               opacity: 1,
-              transition: { duration: 0.5, delay: 1 }
+              transition: { duration: 0.5, delay: 1 },
             }}
             whileHover={{
               y: -5,
-              transitionDuration: 0.2
+              transitionDuration: 0.2,
             }}
             whileTap={{ scale: 0.93, transitionDuration: 0.2 }}
             className="font-[lato] font-semibold text-md text-blue-600 my-5"
@@ -110,7 +116,7 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
           animate={{
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5, delay: 1.25 }
+            transition: { duration: 0.5, delay: 1.25 },
           }}
           whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
           whileTap={{ scale: 0.98, transition: { duration: 0.2 } }}
@@ -124,7 +130,7 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
           animate={{
             y: 0,
             opacity: 1,
-            transition: { duration: 0.5, delay: 1.5 }
+            transition: { duration: 0.5, delay: 1.5 },
           }}
           className="flex flex-row justify-center items-center my-5"
         >
@@ -133,10 +139,10 @@ const Auxilary = ({ email, password, setEmail, setPassword, handleSubmit }) => {
           </p>
           <Link to="/signin" className="mx-5">
             <motion.button
-              className=" font-[lato] text-lg font-semibold"
-              whileHover={{ y: -5, color: "#60a5fa" }}
+              className=" font-[lato] text-blue-600 text-lg font-semibold"
+              whileHover={{ y: -5 }}
             >
-              Sign In
+              Sign Up
             </motion.button>
           </Link>
         </motion.div>
@@ -150,29 +156,30 @@ const Login = () => {
   const auth = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const serverUrl = Config.serverUrl;
+  const loginUrl = Config.loginUrl;
 
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
+    //console.log(email, password);
     axios
-      .post("http://127.0.0.1:8000/api/user/signin/", {
+      .post(serverUrl + loginUrl, {
         email: email,
-        password: password
+        password: password,
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (200 <= response.status && response.status <= 299) {
-          
-          console.log("navigate");
+          //console.log("navigate");
           navigate("/dashboard");
         } else {
           toast({
             title: "Login Failed",
             description: response.data.message,
-            className: "bg-red-100 dark:bg-red-500 font-[lato] rounded-[15px]"
+            className: "bg-red-100 dark:bg-red-500 font-[lato] rounded-[15px]",
           });
           return;
         }
@@ -186,14 +193,13 @@ const Login = () => {
           email: credentials.email,
           userName: credentials.username,
           name: credentials.name,
-          isVerified: credentials.is_verified
+          isVerified: credentials.is_verified,
         };
 
         auth.setAccessToken(access_token);
         auth.setRefreshToken(refresh_token);
         auth.setUser(cred_string);
 
-        
         localStorage.setItem(
           import.meta.env.VITE_BASE_LOCAL_STORAGE_ACCESS_KEY,
           encrypt(refresh_token)
@@ -206,24 +212,24 @@ const Login = () => {
           import.meta.env.VITE_BASE_LOCAL_STORAGE_USER_KEY,
           serializeUser(cred_string)
         );
-        
       })
       .catch((error) => {
+        console.log(error);
         toast({
           title: "Login Failed",
           description: error.response.data.error,
-          className: "bg-red-100 dark:bg-red-500 font-[lato] rounded-[15px]"
+          className: "bg-red-100 dark:bg-red-500 font-[lato] rounded-[15px]",
         });
       });
   };
 
   return (
-    <div className="flex flex-row bg-[#d6daed] items-center h-screen justify-center ">
-      <div className="flex flex-row w-[75%]  bg-gradient-to-br from-[#182433]  shadow-xl to-[#24364d] items-center">
-        <div className="hidden lg:flex w-1/2 h-full items-center justify-center">
-          <h1 className="font-[lato] font-semibold text-5xl text-white">
-            Insightica
-          </h1>
+    <div className="flex flex-row bg-[#d6daed] rounded-2xl items-center h-screen justify-center ">
+      <div className="flex flex-row w-[75%] rounded-2xl bg-gradient-to-br from-[#182433]  shadow-xl to-[#24364d] items-center">
+        <div className="hidden lg:flex w-1/2 rounded-2xl h-full items-center justify-center">
+          <motion.h1 className="font-[lato] font-semibold text-5xl text-white">
+            {AppName}
+          </motion.h1>
         </div>
         <Auxilary
           handleSubmit={handleSubmit}

@@ -1,7 +1,7 @@
 import { Component, useEffect, useState } from "react";
 import AreaChart from "@/components/charts/AreaChart";
 import BarChart from "@/components/charts/BarChart";
-import { tickers } from "@/constants/index.js";
+import {metrics, metricsIndexMemo, tickers, toolsMap} from "@/constants/index.js";
 import { motion } from "framer-motion";
 import { scroller } from "react-scroll";
 
@@ -12,7 +12,7 @@ import StaticInput from "@/components/dashboard/StaticInput";
 import {
   pairPerformanceAnalyzer,
   conditionalEvaluator,
-  triadInsights
+  triadInsights,
 } from "@/constants/ToolTip";
 
 import { FaCircleInfo } from "react-icons/fa6";
@@ -21,25 +21,25 @@ import SingleEvaluator from "@/components/dashboard/SingleEvaluator";
 import DoubleEvaluator from "@/components/dashboard/DoubleEvaluator";
 import TripleEvaluator from "@/components/dashboard/TripleEvaluator";
 import * as PropTypes from "prop-types";
-import Tutorials from "../tools/Tutorials";
 import { useAuth } from "@/auth/AuthContext";
+import Tutorials from "@/components/tools/Tutorials.jsx";
+import SinglePredictor from "@/components/dashboard/SinglePredictor.jsx";
+import BackTest from "@/components/dashboard/BackTest.jsx";
 
-const tools = [
-  "Condition Evaluator",
-  "Pair Performance Analyzer",
-  "Triad Insights"
-];
+import {tools} from "@/constants/index.js";
 
 const toolTipTexts = [
+    "Tool Tip for Single Predictor",
   conditionalEvaluator,
   pairPerformanceAnalyzer,
-  triadInsights
+  triadInsights,
+    "Tool Tip for Back Test"
 ];
 
 const stocks = tickers.map((value) => {
   return {
     label: value,
-    value: value
+    value: value,
   };
 });
 
@@ -67,7 +67,7 @@ class Greet extends Component {
 
 Greet.propTypes = {
   loggedUser: PropTypes.any,
-  className: PropTypes.any
+  className: PropTypes.any,
 };
 
 class Options extends Component {
@@ -75,7 +75,7 @@ class Options extends Component {
     let { option, onClick, className, toolTipText } = this.props;
     return (
       <motion.button
-        className={`flex flex-row w-1/3 gap-3 items-center justify-center pt-7 pb-4 px-10 rounded-tl-3xl rounded-tr-3xl ${className}`}
+        className={`flex flex-row w-1/3 gap-3 items-center justify-center pt-7 pb-4 px-10 rounded-tl-2xl rounded-tr-2xl ${className}`}
         whileTap={{ scale: 0.97, transition: { duration: 0.2 } }}
         onClick={onClick}
       >
@@ -94,13 +94,15 @@ Options.propTypes = {
   option: PropTypes.any,
   onClick: PropTypes.any,
   className: PropTypes.any,
-  toolTipText: PropTypes.any
+  toolTipText: PropTypes.any,
 };
 
 const Tools = () => {
   const auth = useAuth();
   const [selectedTool, setSelectedTool] = useState(0);
   const [visibility, setVisibility] = useState(false);
+
+  const [tickerMetric, setTickerMetric] = useState("Days");
 
   const [selectedTickers, setTickers] = useState([]);
   const [selectedCondition, setCondition] = useState([]);
@@ -113,28 +115,35 @@ const Tools = () => {
   const [singleResponse, setSingleResponse] = useState(null);
   const [doubleResponse, setDoubleResponse] = useState(null);
   const [tripleResponse, setTripleResponse] = useState(null);
+  const [singlePredictorResponse, setSinglePredictorResponse] = useState(null);
+  const [backTestResponse, setBackTestResponse] = useState(null);
+
+  const [singleStock, setSingleStock] = useState(stocks[0]);
 
   const [drawerState, setDrawerState] = useState(false);
 
   const [conditions, setConditionList] = useState(AllConditions);
 
-  const [history, setHistory] = useState(1);
+  const [stoploss, setStoploss] = useState(0);
+  const [brokerage, setBrokerage] = useState(0);
 
+  const [history, setHistory] = useState(1);
+  const [whatToOptimize, setWhatToOptimize] = useState(metrics[0]);
 
   useEffect(() => {
     scroller.scrollTo("toolbanner", {
       duration: 800,
       delay: 0,
       smooth: "easeInOutQuart",
-      offset: -100
+      offset: -100,
     });
   }, []);
 
   const singleReq = {
     stock_names: selectedTickers,
     condition_ids: selectedCondition.map((value) => value.label),
-    ticker_size: `${tickerId}d`,
-    duration: duration
+    ticker_size: tickerMetric === "Days" ? `${tickerId}m` : `${tickerId}d`,
+    duration: duration,
   };
 
   const [doubleReq, setDoubleReq] = useState({
@@ -143,8 +152,8 @@ const Tools = () => {
       selectedCondition.length >= 1
         ? selectedCondition.map((value) => value.label)
         : null,
-    ticker_size: `${tickerId}d`,
-    duration: duration
+    ticker_size: tickerMetric === "Days" ? `${tickerId}m` : `${tickerId}d`,
+    duration: duration,
   });
 
   const [tripleReq, setTripleReq] = useState({
@@ -153,10 +162,49 @@ const Tools = () => {
       selectedCondition.length >= 2
         ? selectedCondition.map((value) => value.label)
         : null,
-    ticker_size: `${tickerId}d`,
-    duration: duration
+    ticker_size: tickerMetric === "Days" ? `${tickerId}m` : `${tickerId}d`,
+    duration: duration,
   });
 
+  const [singlePredictorReq, setSinglePredictorReq] = useState({
+    stock_name: "^NSEI",
+    condition_indices: [1, 2, 3, 4],
+    ticker_size: "1d",
+    duration: 30,
+    what_to_optimise: 0,
+  });
+
+  const [backtestReq, setBacktestReq] = useState({
+    stock_name: "^NSEI",
+    condition_indices: [2],
+    ticker_size: "1d",
+    duration: 100,
+    stoploss: 0,
+    brokerage: 0,
+  });
+
+  useEffect(() => {
+    setBacktestReq({
+      stock_name: singleStock,
+      condition_indices: selectedCondition.map((value) => value.label),
+      ticker_size: `${tickerId}d`,
+      duration: parseInt(duration),
+      stoploss: stoploss,
+      brokerage: brokerage,
+    });
+  }, [singleStock, selectedCondition, duration, tickerId, brokerage, stoploss]);
+
+  useEffect(() => {
+    setSinglePredictorReq(() => {
+      return {
+        stock_name: singleStock.label,
+        condition_indices: selectedCondition.map((value) => value.label).sort(),
+        ticker_size: `${tickerId}d`,
+        duration: parseInt(duration),
+        what_to_optimise: metricsIndexMemo[whatToOptimize.label],
+      };
+    });
+  }, [tickerId, duration, selectedCondition, whatToOptimize, singleStock]);
 
   useEffect(() => {
     if (selectedTool !== 1) return;
@@ -167,20 +215,20 @@ const Tools = () => {
   }, [fixedCondition1, selectedTool]);
 
   useEffect(() => {
-    if (selectedTool === 0) {
+    if (toolsMap[selectedTool] === 'SINGLE_EVAL') {
       const result = AllConditions;
       result.sort((a, b) => a - b);
       setConditionList(result);
-    } else if (selectedTool === 1) {
+    } else if (toolsMap[selectedTool] === 'DOUBLE_EVAL') {
       const result = AllConditions.filter((value) => value !== fixedCondition1);
       result.sort((a, b) => a - b);
       setConditionList(result);
-    } else if (selectedTool === 2) {
+    } else if (toolsMap[selectedTool] === 'TRIPLE_EVAL') {
       const result = AllConditions.filter(
         (value) =>
           value !== fixedCondition1 &&
           value !== fixedCondition2 &&
-          !(value in selectedCondition)
+          !(value in selectedCondition),
       );
       result.sort((a, b) => a - b);
       setConditionList(result);
@@ -192,10 +240,10 @@ const Tools = () => {
       stock_names: selectedTickers,
       condition_ids: [
         fixedCondition1,
-        ...selectedCondition.map((value) => value.label)
-      ],
+        ...selectedCondition.map((value) => value.label),
+      ].sort(),
       ticker_size: `${tickerId}d`,
-      duration: duration
+      duration: duration,
     }));
   }, [fixedCondition1, selectedCondition, selectedTickers, tickerId, duration]);
 
@@ -205,10 +253,10 @@ const Tools = () => {
       condition_ids: [
         fixedCondition1,
         fixedCondition2,
-        ...selectedCondition.map((value) => value.label)
-      ],
+        ...selectedCondition.map((value) => value.label),
+      ].sort(),
       ticker_size: `${tickerId}d`,
-      duration: duration
+      duration: duration,
     }));
   }, [
     fixedCondition1,
@@ -216,13 +264,13 @@ const Tools = () => {
     selectedCondition,
     selectedTickers,
     tickerId,
-    duration
+    duration,
   ]);
 
   return (
     <div className="pt-1 w-full bg-slate-700 " id="toolbanner">
       <Tutorials visible={drawerState} setVisible={setDrawerState} />
-      <Greet loggedUser={auth.user.name} className=" " />
+      <Greet loggedUser={auth.user ? auth.user.name : "Guest"} className="hidden" />
       <div className="bg-slate-700 ">
         <div className="flex flex-col items-center mt-10">
           <section className="flex flex-row justify-evenly w-full pt-5 text-white font-bold font-[lato] text-lg  ">
@@ -254,19 +302,34 @@ const Tools = () => {
               setSingleResponse={setSingleResponse}
               setDoubleResponse={setDoubleResponse}
               setTripleResponse={setTripleResponse}
+              setBackTestResponse={setBackTestResponse}
+              setSinglePredictorResponse={setSinglePredictorResponse}
               setHistory={setHistory}
               conditions={conditions}
               tickerId={tickerId}
               duration={duration}
               singleReq={singleReq}
               doubleReq={doubleReq}
+              singlePredictorReq={singlePredictorReq}
+              backTestReq={backtestReq}
+              setSinglePredictorReq={setSinglePredictorReq}
+              setBackTestReq={setBacktestReq}
               tripleReq={tripleReq}
               selectedTool={selectedTool}
+              tickerMetric={tickerMetric}
+              setTickerMetric={setTickerMetric}
+              whatToOptimize={whatToOptimize}
+              setWhatToOptimize={setWhatToOptimize}
+              singleStock={singleStock}
+              setSingleStock={setSingleStock}
+              stoploss={stoploss}
+              setStoploss={setStoploss}
+              brokerage={brokerage}
+              setBrokerage={setBrokerage}
             />
             <div className="flex flex-col min-h-full w-full lg:w-[70%] ml-5 ">
-              {/* <div className="h-[20rem] w-full rounded-[30px] bg-white"></div> */}
-              {/* <div className="flex flex-row h-full"> */}
-              {selectedTool === 0 && (
+
+              {toolsMap[selectedTool] === 'SINGLE_EVAL' && (
                 <SingleEvaluator
                   response={singleResponse}
                   selectedCondition={selectedCondition}
@@ -274,7 +337,7 @@ const Tools = () => {
                   history={history}
                 />
               )}
-              {selectedTool === 1 && (
+              {toolsMap[selectedTool] === 'DOUBLE_EVAL'  && (
                 <DoubleEvaluator
                   response={doubleResponse}
                   selectedCondition={selectedCondition}
@@ -283,7 +346,7 @@ const Tools = () => {
                   history={history}
                 />
               )}
-              {selectedTool === 2 && (
+              {toolsMap[selectedTool] === 'TRIPLE_EVAL' && (
                 <TripleEvaluator
                   response={tripleResponse}
                   selectedCondition={selectedCondition}
@@ -293,7 +356,10 @@ const Tools = () => {
                   history={history}
                 />
               )}
-              {/* </div> */}
+              {toolsMap[selectedTool] === 'SINGLE_PRED' && (
+                <SinglePredictor response={singlePredictorResponse} />
+              )}
+              {toolsMap[selectedTool] === 'BACK_TEST' && <BackTest response={backTestResponse} />}
             </div>
           </div>
         </div>

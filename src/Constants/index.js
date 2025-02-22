@@ -1,10 +1,9 @@
-
-const AppName = 'Insightica';
-const DesignedBy = 'EWhizard';
-const ButtonStyle = 'm-auto w-cover font-semibold border-solid border-2 border-blue-600 px-10 py-2 hover:text-white hover:bg-blue-600 rounded-[30px]';
+const AppName = "Insightica";
+const DesignedBy = "EWhizard";
+const ButtonStyle =
+  "m-auto w-cover font-semibold border-solid border-2 border-blue-600 px-10 py-2 hover:text-white hover:bg-blue-600 rounded-[30px]";
 
 const footerTitle = `@2024 ${AppName}. Alrights Reserved`;
-
 
 const metrics = [
   "Average Daily Return",
@@ -13,18 +12,28 @@ const metrics = [
   "Profitable Trades",
   "Sharpe Ratio",
   "Total Return",
-  "Winning Percentage"
+  "Winning Percentage",
 ];
 
+const metricsIndexMemo = {
+  "Average Daily Return": 0,
+  "Loss Trades": 1,
+  "Maximum Draw Down": 2,
+  "Profitable Trades": 3,
+  "Sharpe Ratio": 4,
+  "Total Return": 5,
+  "Winning Percentage": 6,
+};
+
 const metricsMemo = {
-  "Average Daily Return":"avg_daily_return",
-  "Loss Trades":"loss_trades",
-  "Maximum Draw Down":"max_drawdown",
-  "Profitable Trades":"profitable_trades",
-  "Sharpe Ratio":"sharpe_ratio",
-  "Total Return":"total_return",
-  "Winning Percentage":"winning_percentage"
-}
+  "Average Daily Return": "avg_daily_return",
+  "Loss Trades": "loss_trades",
+  "Maximum Draw Down": "max_drawdown",
+  "Profitable Trades": "profitable_trades",
+  "Sharpe Ratio": "sharpe_ratio",
+  "Total Return": "total_return",
+  "Winning Percentage": "winning_percentage",
+};
 
 const pricing_values = [
   {
@@ -37,27 +46,27 @@ const pricing_values = [
       {
         title: "Performance Matrix",
         description:
-          "Visualize performance across stocks with pinpoint accuracy."
+          "Visualize performance across stocks with pinpoint accuracy.",
       },
       {
         title: "Metric Wheel",
-        description: "Assess multi-metric performance for targeted conditions."
+        description: "Assess multi-metric performance for targeted conditions.",
       },
       {
         title: "Trend Chart",
         description:
-          "Decode trends over time or across multiple assets effortlessly."
-      }
+          "Decode trends over time or across multiple assets effortlessly.",
+      },
     ],
     whyShouldIUse: [
       "New to indicators? This is your launchpad.",
-      "Craft smarter strategies backed by data."
+      "Craft smarter strategies backed by data.",
     ],
     takeAways: [
       "Clear condition-to-stock performance metrics.",
       "Identify early trends and actionable insights.",
-      "Simplify decision-making with powerful visuals."
-    ]
+      "Simplify decision-making with powerful visuals.",
+    ],
   },
   {
     title: "Double Evaluator",
@@ -68,31 +77,31 @@ const pricing_values = [
       {
         title: "Performance Matrix",
         description:
-          "Fix one condition and discover how others amplify performance."
+          "Fix one condition and discover how others amplify performance.",
       },
       {
         title: "Metric Wheel",
-        description: "Compare condition-pair performance across key metrics."
+        description: "Compare condition-pair performance across key metrics.",
       },
       {
         title: "Trend Chart",
-        description: "Track paired indicators over time for robust insights."
+        description: "Track paired indicators over time for robust insights.",
       },
       {
         title: "Correlation Arc",
         description:
-          "Visualize synergies with the thickness of connection bands—spot the strongest pairs at a glance."
-      }
+          "Visualize synergies with the thickness of connection bands—spot the strongest pairs at a glance.",
+      },
     ],
     whyShouldIUse: [
       "Identify complementary indicators to refine strategies.",
-      "Optimize pair-based performance for sustained gains."
+      "Optimize pair-based performance for sustained gains.",
     ],
     takeAways: [
       "Uncover high-impact condition pairs that boost your strategy.",
       "Visualize data-driven synergies like never before.",
-      " Achieve smarter optimization with advanced tools."
-    ]
+      " Achieve smarter optimization with advanced tools.",
+    ],
   },
   {
     title: "Triple Evaluator",
@@ -103,90 +112,163 @@ const pricing_values = [
       {
         title: "Performance Matrix",
         description:
-          "Assess triplet performance across multiple stocks for strategic depth."
+          "Assess triplet performance across multiple stocks for strategic depth.",
       },
       {
         title: "Metric Wheel",
-        description: "Visualize six-metric outcomes for complex combinations."
+        description: "Visualize six-metric outcomes for complex combinations.",
       },
       {
         title: "Trend Chart",
-        description: "Measure triplet impacts over time and across assets."
+        description: "Measure triplet impacts over time and across assets.",
       },
       {
         title: "Correlation Arc",
-        description: "Measure triplet impacts over time and across assets."
-      }
+        description: "Measure triplet impacts over time and across assets.",
+      },
     ],
     whyShouldIUse: [
       "Build large-scale, multi-condition strategies.",
-      "Optimize deep, multi-variable analytics for better risk-reward tradeoffs."
+      "Optimize deep, multi-variable analytics for better risk-reward tradeoffs.",
     ],
     takeAways: [
       "Model complex market interactions with precision.",
       "Build smarter, large-scale strategies for real impact.",
-      "Gain a competitive edge with actionable, high-value insights."
-    ]
-  }
+      "Gain a competitive edge with actionable, high-value insights.",
+    ],
+  },
 ];
-
-
 
 const menuLinks = [
   {
     title: "Trading Essentials",
-    route: "/tradingessentials"
+    route: "/tradingessentials",
   },
   {
     title: "Terms and Conditions",
-    route: "/tac"
+    route: "/tac",
   },
   {
     title: "Privacy Policy",
-    route: "/privacy"
+    route: "/privacy",
   },
   {
     title: "Invest in Us",
-    route: "/invest"
-  }
+    route: "/invest",
+  },
 ];
 
 const navLinks = [
   {
     title: "Home",
     route: "/dashboard",
-    link: "home"
+    link: "home",
   },
   {
     title: "Products",
     route: "/dashboard",
-    link: "tools"
+    link: "tools",
   },
-  {
-    title: "Testimonials",
-    route: "/dashboard",
-    link: "testimonials"
-  },
+  // {
+  //   title: "Testimonials",
+  //   route: "/dashboard",
+  //   link: "testimonials"
+  // },
   {
     title: "FAQ",
     route: "/dashboard",
-    link: "faq"
+    link: "faq",
   },
   {
     title: "Support",
     route: "/support",
-    link: "contact"
+    link: "contact",
   },
   {
     title: "About Us",
     route: "/about",
-    link: "contact"
-  }
+    link: "contact",
+  },
 ];
 
-
-
 const tickers = [
+  "^NSEI",
+  "^NSEBANK",
+  "^NSEMDCP50",
+  "^NIFTYMIDCAP100",
+  "^NSESMCP100",
+  "^NSEIJR",
+  "^NSE100",
+  "^NIFTY200",
+  "^NSE500",
+  "^CNXIT",
+  "^CNXFMCG",
+  "^CNXAUTO",
+  "^CNXPHARMA",
+  "^CNXREALTY",
+  "^CNXENERGY",
+  "^CNXMETAL",
+  "^CNXINFRA",
+  "^CNXCOMMODITIES",
+  "^CNXMEDIA",
+  "^CNXSERVICE",
+  "^CNXFINANCE",
+  "^CNXPRBANK",
+  "^CNXCONSUMPTION",
+  "^CNXCPSE",
+  "^NSETGR",
+  "^NIFTYALPHA50",
+  "^NIFTYHIGBETA50",
+  "^NIFTYLOWVOL50",
+  "^NIFTYQLTY30",
+  "^NIFTY50VALUE20",
+  "^NIFTY100EQL",
+  "^NIFTY100LIQ15",
+  "^NIFTY500MCAP502525",
+  "^NIFTYMICROCAP250",
+  "^NIFTY100LOWVOL30",
+  "^NIFTYMIDSML400",
+  "^NIFTYSMCP50",
+  "^NIFTY50EQL",
+  "^NIFTY200MOMENTUM30",
+  "^NIFTY50FINSRVEXBANK",
+  "^NIFTYNCYC",
+  "^CNXHOUSING",
+  "^NIFTYINFRADEBTFUNDS",
+  "^NIFTYSHARIAH25",
+  "^NIFTY100ENH",
+  "^NIFTYFULLMDCP100",
+  "^NIFTYMDLIQ15",
+  "^CNXPSUBANK",
+  "^NIFTYINDIADIGITAL",
+  "^NIFTYINDIAMFG",
+  "^NIFTY50FUT",
+  "^NIFTYDIVOPP50TR",
+  "^NIFTYLARGEMIDCAP250",
+  "^NIFTYMIDSELECT100",
+  "^NIFTYAUTO50",
+  "^NIFTYSERVICES100",
+  "^NIFTYSHARIAH500",
+  "^NIFTYINFRAENH",
+  "^NIFTYSHARIAHEQ50",
+  "^NIFTYAUTOCOMPONENTS",
+  "^NIFTY100BONDPLUS",
+  "^NIFTYGROWTH100",
+  "^NIFTYWEALTH",
+  "^NIFTYREALTYENH",
+  "^NIFTYCOMM50",
+  "^NIFTYHEALTHSERVICES",
+  "^NIFTYESG50",
+  "^NIFTYSMLCAP50",
+  "^NIFTYSMALLCAPVAL100",
+  "^NIFTY200ESGALPHA",
+  "^NIFTYALPHAENHANCED",
+  "^NIFTYPRIVSECTORESG",
+  "^NIFTYBANKFIN",
+  "^NIFTYBONDTR",
+  "^NIFTYPSBOND",
+  "^NIFTY500TR",
+  "^CNXCD",
   "RBLBANK.NS",
   "SBILIFE.NS",
   "CROMPTON.NS",
@@ -550,25 +632,130 @@ const tickers = [
   "INSECTICID.NS",
   "STOVEKRAFT.NS",
   "SPICEJET.NS",
-  "BRFL.NS"
+  "BRFL.NS",
 ].sort();
 
+const conditionMapName = {
+  c1: "SMA10 over SMA50",
+  c2: "RSI (Relative Strength Index)",
+  c3: "MACD",
+  c4: "Stochastic Oscillattor",
+  c5: "Momentum",
+  c6: "ADX (Average Directional Index)",
+  c7: "CCI (Commodity Channel Index)",
+  c8: "ATR (Average True Range)",
+  c9: "SAR (Stock Appreciation Right)",
+  c10: "OBV (On-Balance Volume)",
+  c11: "ROC (Rate of Change)",
+  c12: "Williams % R",
+  c13: "MFI (Money Flow Index)",
+  c14: "Chaikin Oscillator",
+  c15: "Trix",
+  c16: "Keltner Channel",
+  c17: "Aroon Oscillator",
+  c18: "10 Week High - High Diff",
+  c19: "Awesome Oscillator",
+  c20: "10 Week Low - Low Diff",
+  c21: "VWAP (Volume Weighted Average Price)",
+  c22: "SMA20",
+  c23: "SMA50",
+  c24: "SMA200",
+  c25: "EMA20",
+  c26: "EMA50",
+  c27: "EMA200",
+  c28: "SMA50 over SMA200",
+  c29: "EMA50 over EMA200",
+  c30: "Chaikin Money Flow",
+  c31: "Ease of Movement",
+  c32: "Volume Oscillator",
+  c33: "SAR (Support and Resistance)",
+  c34: "Trendline",
+  c35: "Fibonacci Retracement Level",
+  c36: "Price Action Breakout",
+  c37: "Supertrend",
+  c38: "Bollinger Bands",
+  c39: "Donchian Channels",
+  c40: "Pivot Points",
+};
 
-const AllConditions = [];
-for (let i = 0; i < 32; i++) AllConditions.push(i + 1);
+const conditionMapId = {
+  "SMA10 over SMA50": "c1",
+  "RSI (Relative Strength Index)": "c2",
+  MACD: "c3",
+  "Stochastic Oscillattor": "c4",
+  Momentum: "c5",
+  "ADX (Average Directional Index)": "c6",
+  "CCI (Commodity Channel Index)": "c7",
+  "ATR (Average True Range)": "c8",
+  "SAR (Stock Appreciation Right)": "c9",
+  "OBV (On-Balance Volume)": "c10",
+  "ROC (Rate of Change)": "c11",
+  "Williams % R": "c12",
+  "MFI (Money Flow Index)": "c13",
+  "Chaikin Oscillator": "c14",
+  Trix: "c15",
+  "Keltner Channel": "c16",
+  "Aroon Oscillator": "c17",
+  "10 Week High - High Diff": "c18",
+  "Awesome Oscillator": "c19",
+  "10 Week Low - Low Diff": "c20",
+  "VWAP (Volume Weighted Average Price)": "c21",
+  SMA20: "c22",
+  SMA50: "c23",
+  SMA200: "c24",
+  EMA20: "c25",
+  EMA50: "c26",
+  EMA200: "c27",
+  "SMA50 over SMA200": "c28",
+  "EMA50 over EMA200": "c29",
+  "Chaikin Money Flow": "c30",
+  "Ease of Movement": "c31",
+  "Volume Oscillator": "c32",
+  "SAR (Support and Resistance)": "c33",
+  Trendline: "c34",
+  "Fibonacci Retracement Level": "c35",
+  "Price Action Breakout": "c36",
+  Supertrend: "c37",
+  "Bollinger Bands": "c38",
+  "Donchian Channels": "c39",
+  "Pivot Points": "c40",
+};
 
+const AllConditions = Object.keys(conditionMapName).map((value) =>
+  parseInt(value.slice(1, value.length)),
+);
 
+const tools = [
+  "Single Predictor",
+  "Condition Evaluator",
+  "Pair Performance Analyzer",
+  "Triad Insights",
+  "Back Test",
+];
 
-export{
-    AppName,
-    DesignedBy,
-    ButtonStyle,
-    tickers,
-    navLinks,
-    menuLinks,
-	footerTitle,
+const toolsMap = [
+  "SINGLE_PRED",
+  "SINGLE_EVAL",
+  "DOUBLE_EVAL",
+  "TRIPLE_EVAL",
+  "BACK_TEST",
+];
+
+export {
+  AppName,
+  DesignedBy,
+  ButtonStyle,
+  tickers,
+  navLinks,
+  menuLinks,
+  footerTitle,
   metrics,
   metricsMemo,
   pricing_values,
   AllConditions,
-}
+  conditionMapId,
+  conditionMapName,
+  metricsIndexMemo,
+  tools,
+  toolsMap,
+};
