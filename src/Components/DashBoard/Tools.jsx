@@ -10,31 +10,23 @@ import { Tooltip } from "react-tooltip";
 import StaticInput from "@/components/dashboard/StaticInput";
 
 import {
-  pairPerformanceAnalyzer,
-  conditionalEvaluator,
-  triadInsights,
+  toolTipTexts
 } from "@/constants/ToolTip";
 
 import { FaCircleInfo } from "react-icons/fa6";
 
-import SingleEvaluator from "@/components/dashboard/SingleEvaluator";
-import DoubleEvaluator from "@/components/dashboard/DoubleEvaluator";
-import TripleEvaluator from "@/components/dashboard/TripleEvaluator";
+import SingleEvaluator from "@/components/tools/SingleEvaluator.jsx";
+import DoubleEvaluator from "@/components/tools/DoubleEvaluator.jsx";
+import TripleEvaluator from "@/components/tools/TripleEvaluator.jsx";
 import * as PropTypes from "prop-types";
 import { useAuth } from "@/auth/AuthContext";
 import Tutorials from "@/components/tools/Tutorials.jsx";
-import SinglePredictor from "@/components/dashboard/SinglePredictor.jsx";
-import BackTest from "@/components/dashboard/BackTest.jsx";
+import SinglePredictor from "@/components/tools/SinglePredictor.jsx";
+import BackTest from "@/components/tools/BackTest.jsx";
 
 import {tools} from "@/constants/index.js";
 
-const toolTipTexts = [
-    "Tool Tip for Single Predictor",
-  conditionalEvaluator,
-  pairPerformanceAnalyzer,
-  triadInsights,
-    "Tool Tip for Back Test"
-];
+
 
 const stocks = tickers.map((value) => {
   return {
@@ -100,7 +92,6 @@ Options.propTypes = {
 const Tools = () => {
   const auth = useAuth();
   const [selectedTool, setSelectedTool] = useState(0);
-  const [visibility, setVisibility] = useState(false);
 
   const [tickerMetric, setTickerMetric] = useState("Days");
 
@@ -369,5 +360,3 @@ const Tools = () => {
 };
 
 export default Tools;
-
-// What's the probability of you arriving late to this test? It should be zero! ☠️

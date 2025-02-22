@@ -3,7 +3,6 @@ import FAQ from "@/components/dashboard/FAQ";
 import Pricing from "@/components/dashboard/Pricing";
 import Footer from "@/components/dashboard/Footer";
 import BarChart from "@/components/charts/BarChart";
-// import { navLinks } from "@/constants";
 import Banner from "@/components/dashboard/Banner";
 import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";

@@ -48,7 +48,7 @@ const TradingEssential = () => {
   return (
     <div className={''}>
       <NavBar />
-      <div className="flex font-[lato] h-[50rem]">
+      <div className="flex font-[lato] min-h-[50rem]">
         <div className="w-1/4 p-4 border-r">
           <h2 className="font-semibold text-lg mb-4">Popular Calculators</h2>
           <ul>

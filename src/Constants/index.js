@@ -733,6 +733,9 @@ const tools = [
   "Back Test",
 ];
 
+
+const tickerMetrics = ["Days", "Minutes"];
+
 const toolsMap = [
   "SINGLE_PRED",
   "SINGLE_EVAL",
@@ -758,4 +761,5 @@ export {
   metricsIndexMemo,
   tools,
   toolsMap,
+    tickerMetrics
 };

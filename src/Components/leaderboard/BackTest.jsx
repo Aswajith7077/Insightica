@@ -8,7 +8,7 @@ import {
 import Config from "/config/config";
 import axios from "axios";
 import Select from "react-select";
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.jsx";
 
 const handleRequest = async (
@@ -167,7 +167,7 @@ const BackTestLeaderBoard = () => {
           ))}
         </select>
         <Select
-          value={condition}
+          value={{label:condition,value:condition}}
           options={AllConditions.map((val) => ({ label: val, value: val }))}
           onChange={(selected) => {
 			  console.log(typeof selected.label);

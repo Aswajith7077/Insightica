@@ -4,8 +4,16 @@ const pairPerformanceAnalyzer =
 
 const triadInsights =
   "Analyze the performance of triplets with advanced tools like Metric Wheel, Correlation Arc, and Performance Matrix.";
+const SinglePredictor = "Tool Tip for Single Predictor"
+const BackTest = "Tool Tip for Back Test"
 
-
+const toolTipTexts = [
+    SinglePredictor,
+    conditionalEvaluator,
+    pairPerformanceAnalyzer,
+    triadInsights,
+    BackTest,
+];
 
 // tools tooltip
 
@@ -27,6 +35,6 @@ export{
     performanceMatrix,
     metricWheel,
     trendCharts,
-    correlationArc
-
+    correlationArc,
+    toolTipTexts
 }

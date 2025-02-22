@@ -23,27 +23,6 @@ const BrokerageCalculator = () => {
 			options: { fixed: 20, percent: 0.03 },
 			margin_ratio: { equity_intraday: 10, futures: 5 },
 		},
-		Upstox: {
-			equity_delivery: { fixed: 0, percent: 0 },
-			equity_intraday: { fixed: 20, percent: 0.05 },
-			futures: { fixed: 20, percent: 0.05 },
-			options: { fixed: 20, percent: 0.05 },
-			margin_ratio: { equity_intraday: 10, futures: 5 },
-		},
-		"Angel Broking": {
-			equity_delivery: { fixed: 0, percent: 0 },
-			equity_intraday: { fixed: 20, percent: 0.03 },
-			futures: { fixed: 20, percent: 0.03 },
-			options: { fixed: 20, percent: 0.03 },
-			margin_ratio: { equity_intraday: 10, futures: 5 },
-		},
-		"Template Broker": {
-			equity_delivery: {fixed: 0, percent: 0},
-			equity_intraday: {fixed: 20, percent: 0.05},
-			futures: {fixed: 20, percent: 0.05},
-			options: {fixed: 20, percent: 0.05},
-			margin_ratio: {equity_intraday: 5, 'futures': 3}
-		}
 	};
 
 	const calculateBrokerage = () => {
@@ -54,8 +33,7 @@ const BrokerageCalculator = () => {
 
 		let tradeValue = parseFloat(trade_value) || 0;
 		let brokerageData = BROKERAGE_RULES[broker][transaction_type];
-		let percentBrokerage = tradeValue * (brokerageData.percent / 100);
-		let brokerage = brokerageData.fixed > 0 ? Math.min(brokerageData.fixed, percentBrokerage) : percentBrokerage;
+		let brokerage = Math.min(brokerageData.fixed, tradeValue * (brokerageData.percent / 100));
 
 		let stt = tradeValue * 0.001;
 		let gst = (brokerage + stt) * 0.18;
@@ -64,6 +42,7 @@ const BrokerageCalculator = () => {
 		let totalTransactionCost = brokerage + stt + gst + exchange_fees + stamp_duty;
 
 		let margin = leverage_ratio ? tradeValue / parseFloat(leverage_ratio) : tradeValue / BROKERAGE_RULES[broker].margin_ratio[transaction_type];
+
 		let breakEven = shares_held ? (tradeValue + totalTransactionCost) / parseInt(shares_held) : 0;
 		let profitLoss = shares_held && entry_price && exit_price ? (parseFloat(exit_price) - parseFloat(entry_price)) * parseInt(shares_held) - totalTransactionCost : 0;
 		let dividendYield = shares_held && dividend_per_share ? (parseFloat(dividend_per_share) * parseInt(shares_held)) / tradeValue * 100 : 0;
@@ -82,11 +61,6 @@ const BrokerageCalculator = () => {
 		<div className="p-4 bg-gray-100 rounded-lg shadow-md">
 			<h2 className="text-lg font-semibold mb-4">Comprehensive Brokerage Calculator</h2>
 			<div className="grid grid-cols-2 gap-4">
-				<select value={inputData.broker} onChange={e => setInputData({ ...inputData, broker: e.target.value })} className="p-2 border">
-					{Object.keys(BROKERAGE_RULES).map(broker => (
-						<option key={broker} value={broker}>{broker}</option>
-					))}
-				</select>
 				<input type="text" placeholder="Trade Value" className="p-2 border" value={inputData.trade_value} onChange={e => setInputData({ ...inputData, trade_value: e.target.value })} />
 				<input type="text" placeholder="Entry Price" className="p-2 border" value={inputData.entry_price} onChange={e => setInputData({ ...inputData, entry_price: e.target.value })} />
 				<input type="text" placeholder="Exit Price" className="p-2 border" value={inputData.exit_price} onChange={e => setInputData({ ...inputData, exit_price: e.target.value })} />

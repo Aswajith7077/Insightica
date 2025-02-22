@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
+
+
 const formatName = (name) => {
   let names = name.split(" ");
   let result = "";

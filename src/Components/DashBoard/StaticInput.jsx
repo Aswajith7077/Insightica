@@ -1,28 +1,17 @@
 import { Component, useEffect, useState } from "react";
-import { metrics, tickers, toolsMap } from "@/constants/index.js";
+import { metrics, tickers, toolsMap ,tools,tickerMetrics} from "@/constants/index.js";
 import { motion } from "framer-motion";
 import Select from "react-select";
 import axios from "axios";
 import Config from "/config/config";
-
 import {
-  pairPerformanceAnalyzer,
-  conditionalEvaluator,
-  triadInsights,
+  toolTipTexts,
 } from "@/constants/ToolTip";
 
 import * as PropTypes from "prop-types";
 import StockSelect from "@/components/tools/StockSelect";
-// import { api } from "@/api/api.js";
-// import * as res from "autoprefixer";
 
-const tools = [
-  "Single Predictor",
-  "Condition Evaluator",
-  "Pair Performance Analyzer",
-  "Triad Insights",
-  "Back Test",
-];
+
 
 const serverUrl = Config.serverUrl;
 const singleEvaluatorUrl = Config.singleEvalUrl;
@@ -31,15 +20,9 @@ const tripleEvaluatorUrl = Config.tripleEvalUrl;
 const backTestUrl = Config.backTestUrl;
 const singlePredictorUrl = Config.singlePredUrl;
 
-const tickerMetrics = ["Days", "Minutes"];
 
-const toolTipTexts = [
-  "Tool Tip for Single Predictor",
-  conditionalEvaluator,
-  pairPerformanceAnalyzer,
-  triadInsights,
-  "Tool Tip for Back Test",
-];
+
+
 
 const stocks = tickers.map((value) => {
   return {
@@ -62,10 +45,10 @@ const handleSubmit = async (
   setHistory,
   selectedTool,
 ) => {
-  // console.log(`Server Url : ${serverUrl}` + singlePredictorUrl);
+
   console.log(toolsMap[selectedTool]);
   if (toolsMap[selectedTool] === "SINGLE_EVAL") {
-    // console.log(singleReq);
+
     axios
       .post(`${serverUrl}${singleEvaluatorUrl}`, singleReq)
       .then((res) => {
@@ -74,7 +57,7 @@ const handleSubmit = async (
       })
       .catch((err) => alert(err.message));
   } else if (toolsMap[selectedTool] === "DOUBLE_EVAL") {
-    // console.log(doubleReq);
+
     axios
       .post(`${serverUrl}${doubleEvaluatorUrl}`, doubleReq)
       .then((res) => {
@@ -142,7 +125,6 @@ class StaticInput extends Component {
       setSingleStock,
       whatToOptimize,
       setWhatToOptimize,
-
       stoploss,
       setStoploss,
       brokerage,
@@ -323,12 +305,7 @@ class StaticInput extends Component {
           />
         )}
         <h2 className="font-[lato] font-semibold text-lg mt-5">Stocks</h2>
-        {/*<Select*/}
-        {/*    isMulti*/}
-        {/*    options={stocks}*/}
-        {/*    onChange={value => setTickers(value)}*/}
-        {/*    className="w-full font-[lato] font-semibold text-base py-3"*/}
-        {/*/>*/}
+
 
         {toolsMap[selectedTool] !== "BACK_TEST" &&
           toolsMap[selectedTool] !== "SINGLE_PRED" && (

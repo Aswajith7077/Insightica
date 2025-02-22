@@ -47,7 +47,7 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
   const options = {
     chart: {
       height: 650,
-      type: "line",
+      type: "bar",
       toolbar: {
         show: false
       }
@@ -77,7 +77,14 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
         ? Object.keys(
             data[`history_${selectedHistory}`][selectedCondition] || {}
           ).map((_, index) => `${tickers[index]}`)
-        : []
+        : [],
+      title: {
+        text: "Stocks", // Replace with your desired x-axis label
+        style: {
+          fontSize: "16px",
+          fontWeight: 600,
+        },
+      },
     },
     yaxis: {
       labels: {
@@ -146,7 +153,7 @@ const BarChartTime = ({ history, data, tickers, conditions }) => {
               data: normalizedXValues
             }
           ]}
-          type="line"
+          type="bar"
           height={450}
         />
       </div>
